@@ -1,6 +1,9 @@
 package ent_controller
 
 import (
+	"fmt"
+	"gin-ddd-example/internal/app/model"
+	"gin-ddd-example/internal/app/service/ent_service"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -11,18 +14,17 @@ func List(c *gin.Context) {
 }
 
 func Create(c *gin.Context) {
-
-	// var signupDto SignupDto
-	// if err := c.ShouldBind(&signupDto); err != nil {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"message": fmt.Sprint(err)})
-	// 	return
-	// }
-
-	// err =
-
-	c.JSON(http.StatusOK, gin.H{"message": "注册成功"})
-
-	c.JSON(http.StatusOK, gin.H{"message": "create ent", "status": 200})
+	var addEntReq model.AddEntReq
+	if err := c.ShouldBind(&addEntReq); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": fmt.Sprint(err)})
+		return
+	}
+	err := ent_service.CreateEnt(&addEntReq)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": fmt.Sprint(err)})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"message": "ent created", "status": 200})
 }
 
 func Update(c *gin.Context) {
