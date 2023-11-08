@@ -1,6 +1,7 @@
 {
     "cSpell.words": [
         "dbname",
+        "ents",
         "gorm",
         "mapstructure",
         "signup"

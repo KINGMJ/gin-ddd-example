@@ -7,8 +7,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @Summary		Show an account
+// @Description	get string by ID
+// @Success		200	{string} key
+// @Router		/login [get]
 func Login(c *gin.Context) {
-	fmt.Println("登录请求")
 	c.JSON(http.StatusOK, gin.H{"message": "key", "status": 200})
 }
 

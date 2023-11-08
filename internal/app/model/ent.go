@@ -22,6 +22,14 @@ type AddEntReq struct {
 	ContactPhone string `form:"contact_phone" binding:"required"`
 }
 
+type UpdateEntReq struct {
+	EntName      string `form:"ent_name"`
+	EntDesc      string `form:"ent_desc"`
+	ContactName  string `form:"contact_name"`
+	ContactEmail string `form:"contact_email"`
+	ContactPhone string `form:"contact_phone"`
+}
+
 func (req AddEntReq) ToEnt() Ent {
 	return Ent{
 		Name: req.EntName,

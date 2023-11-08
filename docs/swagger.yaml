@@ -1,0 +1,90 @@
+basePath: /
+definitions:
+  model.AddEntReq:
+    properties:
+      contact_email:
+        type: string
+      contact_name:
+        type: string
+      contact_phone:
+        type: string
+      ent_desc:
+        type: string
+      ent_name:
+        type: string
+    required:
+    - contact_email
+    - contact_name
+    - contact_phone
+    - ent_name
+    type: object
+externalDocs:
+  description: OpenAPI
+  url: https://swagger.io/resources/open-api/
+host: localhost:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample server celler server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Swagger Example API
+  version: "1.0"
+paths:
+  /login:
+    get:
+      description: get string by ID
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Show an account
+  /v1/ents:
+    get:
+      consumes:
+      - application/json
+      description: 加载我可以看到的所有企业
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code", "message"}
+          schema:
+            type: string
+      summary: 企业列表加载
+      tags:
+      - ents
+    post:
+      consumes:
+      - application/json
+      description: 创建企业
+      parameters:
+      - description: create ent
+        in: body
+        name: ent
+        required: true
+        schema:
+          $ref: '#/definitions/model.AddEntReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: code", "message"}
+          schema:
+            type: string
+        "500":
+          description: status", "message"}
+          schema:
+            type: string
+      summary: 创建企业
+      tags:
+      - ents
+securityDefinitions:
+  BasicAuth:
+    type: basic
+swagger: "2.0"
