@@ -29,11 +29,13 @@ func InitConfig() {
 	configEnv := os.Getenv("GO_ENV")
 	switch configEnv {
 	case "dev":
-		configPath = "configs/dev.yml"
+		configPath = "../../configs/dev.yml"
 	case "test":
-		configPath = "configs/test.yml"
+		configPath = "../../configs/test.yml"
 	case "prod":
-		configPath = "configs/prod.yml"
+		configPath = "../../configs/prod.yml"
+	default:
+		configPath = "../../configs/dev.yml"
 	}
 	// 指定配置文件路径
 	viper.SetConfigFile(configPath)

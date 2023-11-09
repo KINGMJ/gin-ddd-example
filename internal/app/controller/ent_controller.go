@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"gin-ddd-example/internal/app/service"
 
 	"github.com/gin-gonic/gin"
@@ -11,8 +12,8 @@ type EntController struct {
 	entService service.EntService
 }
 
-func NewEntController(_entService service.EntService) *EntController {
-	return &EntController{entService: _entService}
+func NewEntController(entService service.EntService) *EntController {
+	return &EntController{entService}
 }
 
 // @Summary      企业列表加载
@@ -23,9 +24,9 @@ func NewEntController(_entService service.EntService) *EntController {
 // @Success      200  {string}  json{"code", "message"}
 // @Router       /v1/ents [get]
 func (c *EntController) List(ctx *gin.Context) {
-
 	// ents := c.entService.
 	// 	c.JSON(http.StatusOK, gin.H{"message": "list ents", "status": 200})
+	fmt.Println("加载企业列表")
 }
 
 // @Summary      创建企业

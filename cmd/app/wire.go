@@ -1,3 +1,6 @@
+//go:build wireinject
+// +build wireinject
+
 package main
 
 import (
@@ -16,6 +19,9 @@ func InitApp(database *db.Database) *router.ApiRouter {
 		controller.NewEntController,
 		service.NewEntService,
 		repo.NewEntRepo,
+		// 接口与实现类绑定
+		wire.Bind(new(service.EntService), new(*service.EntServiceImpl)),
+		wire.Bind(new(repo.EntRepo), new(*repo.EntRepoImpl)),
 	)
 	return nil
 }

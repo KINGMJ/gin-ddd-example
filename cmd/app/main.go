@@ -41,12 +41,9 @@ func main() {
 	docs.SwaggerInfo.Schemes = []string{"http", "https"}
 
 	r := gin.Default()
-
 	apiRouter := InitApp(database)
-
-	// router
+	// 创建路由
 	apiRouter.SetupRoutes(r)
-
 	// 运行服务
 	r.Run()
 }

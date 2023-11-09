@@ -16,14 +16,13 @@ func NewApiRouter(
 	entController *controller.EntController,
 ) *ApiRouter {
 	return &ApiRouter{
-		entController: entController,
+		entController,
 	}
 }
 
 // 设置 route
 func (ar *ApiRouter) SetupRoutes(r *gin.Engine) {
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-
 	v1 := r.Group("/v1")
 	{
 		v1.GET("/ents", ar.entController.List)

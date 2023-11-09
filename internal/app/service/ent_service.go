@@ -6,18 +6,18 @@ import (
 
 // ent 服务接口
 type EntService interface {
-	CreateEnt(req *AddEntDto) error
+	// CreateEnt(req *AddEntDto) error
 	ListEnts(page int, pageSize int) []EntListDto
-	ViewEnt(entId int) EntListDto
+	// ViewEnt(entId int) EntListDto
 }
 
 // entServiceImpl 实现EntService接口
-type entServiceImpl struct {
+type EntServiceImpl struct {
 	entRepo repo.EntRepo
 }
 
-func NewEntService(entRepo repo.EntRepo) *entServiceImpl {
-	return &entServiceImpl{entRepo}
+func NewEntService(entRepo repo.EntRepo) *EntServiceImpl {
+	return &EntServiceImpl{entRepo}
 }
 
 // ----------- (●'◡'●)(●'◡'●)(●'◡'●)(●'◡'●)(●'◡'●)(●'◡'●)(●'◡'●)(●'◡'●)(●'◡'●)(●'◡'●) ------------
@@ -43,8 +43,9 @@ type EntListDto struct {
 
 // ----------- (●'◡'●)(●'◡'●)(●'◡'●)(●'◡'●)(●'◡'●)(●'◡'●)(●'◡'●)(●'◡'●)(●'◡'●)(●'◡'●) ------------
 // 业务操作
-func (s *entServiceImpl) ListEnts(page, pageSize int) []EntListDto {
-	entPo, err := s.entRepo.FindById()
+func (s *EntServiceImpl) ListEnts(page, pageSize int) []EntListDto {
+	// entPo, err := s.entRepo.FindById()
+	return []EntListDto{}
 }
 
 // func (s *entService) CreateEnt(addEntReq *model.AddEntReq) error {
