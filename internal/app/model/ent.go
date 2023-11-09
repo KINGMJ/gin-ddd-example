@@ -2,7 +2,7 @@ package model
 
 import "gorm.io/gorm"
 
-// 企业模型
+// 企业持久化模型
 type Ent struct {
 	gorm.Model
 	Name              string `gorm:"unique;not null"`
@@ -14,13 +14,8 @@ type Ent struct {
 }
 
 // 创建企业，请求参数
-type AddEntReq struct {
-	EntName      string `form:"ent_name" binding:"required"`
-	EntDesc      string `form:"ent_desc"`
-	ContactName  string `form:"contact_name" binding:"required"`
-	ContactEmail string `form:"contact_email" binding:"required"`
-	ContactPhone string `form:"contact_phone" binding:"required"`
-}
+
+// 企业列表加载 dto
 
 type UpdateEntReq struct {
 	EntName      string `form:"ent_name"`
@@ -30,9 +25,9 @@ type UpdateEntReq struct {
 	ContactPhone string `form:"contact_phone"`
 }
 
-func (req AddEntReq) ToEnt() Ent {
-	return Ent{
-		Name: req.EntName,
-		Desc: req.EntDesc,
-	}
-}
+// func (req AddEntReq) ToEnt() Ent {
+// 	return Ent{
+// 		Name: req.EntName,
+// 		Desc: req.EntDesc,
+// 	}
+// }

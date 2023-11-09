@@ -2,6 +2,7 @@ package db
 
 import (
 	"fmt"
+	"gin-ddd-example/internal/app/model"
 	"gin-ddd-example/pkg/config"
 	"log"
 
@@ -9,9 +10,13 @@ import (
 	"gorm.io/gorm"
 )
 
-var Db *gorm.DB
+// 定义一个 database 结构体
+type Database struct {
+	DB *gorm.DB
+}
 
-func InitDb() {
+// 初始化db链接
+func InitDb() *Database {
 	c := config.Conf.DBConfig
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s TimeZone=%s",
 		c.Host,
@@ -21,9 +26,11 @@ func InitDb() {
 		c.Port,
 		c.TimeZone,
 	)
-	databases, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal(err)
 	}
-	Db = databases
+
+	db.AutoMigrate(&model.User{}, &model.Ent{})
+	return &Database{DB: db}
 }

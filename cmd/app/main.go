@@ -2,9 +2,10 @@ package main
 
 import (
 	"gin-ddd-example/docs"
-	"gin-ddd-example/internal/app/route"
 	"gin-ddd-example/pkg/config"
 	"gin-ddd-example/pkg/db"
+
+	"github.com/gin-gonic/gin"
 )
 
 // @title           Swagger Example API
@@ -27,21 +28,25 @@ import (
 // @externalDocs.description  OpenAPI
 // @externalDocs.url          https://swagger.io/resources/open-api/
 func main() {
-	// // 初始化操作
+	// 初始化操作
 	config.InitConfig()
-	db.InitDb()
+	database := db.InitDb()
 
+	// swagger 配置
 	docs.SwaggerInfo.Title = "Swagger Example API"
 	docs.SwaggerInfo.Description = "This is a sample server Petstore server."
 	docs.SwaggerInfo.Version = "1.0"
 	docs.SwaggerInfo.Host = "localhost:8080"
 	docs.SwaggerInfo.BasePath = ""
-	// docs.SwaggerInfo.Schemes = []string{"http", "https"}
+	docs.SwaggerInfo.Schemes = []string{"http", "https"}
 
-	r := route.InitRouter()
+	r := gin.Default()
+
+	apiRouter := InitApp(database)
+
+	// router
+	apiRouter.SetupRoutes(r)
 
 	// 运行服务
 	r.Run()
-
-	// db.Db.AutoMigrate(&model.User{})
 }
