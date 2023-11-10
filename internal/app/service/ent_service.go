@@ -1,12 +1,13 @@
 package service
 
 import (
+	"gin-ddd-example/internal/app/model"
 	"gin-ddd-example/internal/app/repo"
 )
 
 // ent 服务接口
 type EntService interface {
-	// CreateEnt(req *AddEntDto) error
+	CreateEnt(req *AddEntDto) error
 	ListEnts(page int, pageSize int) []EntListDto
 	// ViewEnt(entId int) EntListDto
 }
@@ -25,11 +26,19 @@ func NewEntService(entRepo repo.EntRepo) *EntServiceImpl {
 
 // 创建企业dto
 type AddEntDto struct {
-	EntName      string `form:"ent_name" binding:"required"`
-	EntDesc      string `form:"ent_desc"`
-	ContactName  string `form:"contact_name" binding:"required"`
-	ContactEmail string `form:"contact_email" binding:"required"`
-	ContactPhone string `form:"contact_phone" binding:"required"`
+	EntName      string `form:"ent_name" json:"ent_name" binding:"required"`
+	EntDesc      string `form:"ent_desc" json:"ent_desc"`
+	ContactName  string `form:"contact_name" json:"contact_name" binding:"required"`
+	ContactEmail string `form:"contact_email" json:"contact_email" binding:"required,email"`
+	ContactPhone string `form:"contact_phone" json:"contact_phone" binding:"required,phone"`
+}
+
+// dto 与 po 转换 ，这里暂时不使用领域模型的概念
+func (dto AddEntDto) ToEnt() model.Ent {
+	return model.Ent{
+		Name: dto.EntName,
+		Desc: dto.EntDesc,
+	}
 }
 
 // 企业列表dto
@@ -48,11 +57,10 @@ func (s *EntServiceImpl) ListEnts(page, pageSize int) []EntListDto {
 	return []EntListDto{}
 }
 
-// func (s *entService) CreateEnt(addEntReq *model.AddEntReq) error {
-// 	ent := addEntReq.ToEnt()
-// 	return
-// 	return ent_dao.Save(ent)
-// }
+func (s *EntServiceImpl) CreateEnt(addEntDto *AddEntDto) error {
+	entEntity := addEntDto.ToEnt()
+	return s.entRepo.Save(entEntity)
+}
 
 // func UpdateEnt(entId int, updateEntReq *model.UpdateEntReq) error {
 // 	ent, err := ent_dao.FindById(entId)

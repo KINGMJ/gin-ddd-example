@@ -1,6 +1,17 @@
 basePath: /
 definitions:
-  model.AddEntReq:
+  response.Response:
+    properties:
+      code:
+        description: 错误码，0表示无错误
+        type: integer
+      data:
+        description: 响应数据，一般从这里前端从这个里面取出数据展示
+      message:
+        description: 提示信息
+        type: string
+    type: object
+  service.AddEntDto:
     properties:
       contact_email:
         type: string
@@ -49,13 +60,26 @@ paths:
       consumes:
       - application/json
       description: 加载我可以看到的所有企业
+      parameters:
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 每页查询的数量
+        in: query
+        name: page_size
+        type: integer
       produces:
       - application/json
       responses:
         "200":
-          description: code", "message"}
+          description: OK
           schema:
-            type: string
+            $ref: '#/definitions/response.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
       summary: 企业列表加载
       tags:
       - ents
@@ -64,23 +88,23 @@ paths:
       - application/json
       description: 创建企业
       parameters:
-      - description: create ent
+      - description: 创建企业参数
         in: body
         name: ent
         required: true
         schema:
-          $ref: '#/definitions/model.AddEntReq'
+          $ref: '#/definitions/service.AddEntDto'
       produces:
       - application/json
       responses:
         "200":
-          description: code", "message"}
+          description: OK
           schema:
-            type: string
-        "500":
-          description: status", "message"}
+            $ref: '#/definitions/response.Response'
+        "400":
+          description: Bad Request
           schema:
-            type: string
+            $ref: '#/definitions/response.Response'
       summary: 创建企业
       tags:
       - ents

@@ -51,11 +51,31 @@ const docTemplate = `{
                     "ents"
                 ],
                 "summary": "企业列表加载",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "页码",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页查询的数量",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "code\", \"message\"}",
+                        "description": "OK",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
                         }
                     }
                 }
@@ -74,26 +94,26 @@ const docTemplate = `{
                 "summary": "创建企业",
                 "parameters": [
                     {
-                        "description": "create ent",
+                        "description": "创建企业参数",
                         "name": "ent",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.AddEntReq"
+                            "$ref": "#/definitions/service.AddEntDto"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "code\", \"message\"}",
+                        "description": "OK",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/response.Response"
                         }
                     },
-                    "500": {
-                        "description": "status\", \"message\"}",
+                    "400": {
+                        "description": "Bad Request",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/response.Response"
                         }
                     }
                 }
@@ -101,7 +121,23 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "model.AddEntReq": {
+        "response.Response": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "错误码，0表示无错误",
+                    "type": "integer"
+                },
+                "data": {
+                    "description": "响应数据，一般从这里前端从这个里面取出数据展示"
+                },
+                "message": {
+                    "description": "提示信息",
+                    "type": "string"
+                }
+            }
+        },
+        "service.AddEntDto": {
             "type": "object",
             "required": [
                 "contact_email",

@@ -26,5 +26,6 @@ func (ar *ApiRouter) SetupRoutes(r *gin.Engine) {
 	v1 := r.Group("/v1")
 	{
 		v1.GET("/ents", ar.entController.List)
+		v1.POST("/ents", ar.entController.Create)
 	}
 }

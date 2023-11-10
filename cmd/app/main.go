@@ -4,6 +4,7 @@ import (
 	"gin-ddd-example/docs"
 	"gin-ddd-example/pkg/config"
 	"gin-ddd-example/pkg/db"
+	"gin-ddd-example/pkg/validate"
 
 	"github.com/gin-gonic/gin"
 )
@@ -41,6 +42,9 @@ func main() {
 	docs.SwaggerInfo.Schemes = []string{"http", "https"}
 
 	r := gin.Default()
+	// 注册自定义的格式校验
+	validate.RegisterCustomValidate()
+	// 使用wire初始化应用
 	apiRouter := InitApp(database)
 	// 创建路由
 	apiRouter.SetupRoutes(r)

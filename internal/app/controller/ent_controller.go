@@ -3,6 +3,8 @@ package controller
 import (
 	"fmt"
 	"gin-ddd-example/internal/app/service"
+	"gin-ddd-example/pkg/errors/e"
+	"gin-ddd-example/pkg/response"
 
 	"github.com/gin-gonic/gin"
 )
@@ -21,12 +23,13 @@ func NewEntController(entService service.EntService) *EntController {
 // @Tags         ents
 // @Accept       json
 // @Produce      json
-// @Success      200  {string}  json{"code", "message"}
+// @Param		 page query  int false "页码"
+// @Param        page_size query int false "每页查询的数量"
+// @Success      200  {object} response.Response
+// @Failure      400  {object} response.Response
 // @Router       /v1/ents [get]
 func (c *EntController) List(ctx *gin.Context) {
-	// ents := c.entService.
-	// 	c.JSON(http.StatusOK, gin.H{"message": "list ents", "status": 200})
-	fmt.Println("加载企业列表")
+	response.JSON(ctx, e.Success, "加载企业列表")
 }
 
 // @Summary      创建企业
@@ -34,39 +37,19 @@ func (c *EntController) List(ctx *gin.Context) {
 // @Tags         ents
 // @Accept       json
 // @Produce      json
-// @Param        ent body model.AddEntReq true "create ent"
-// @Success      200  {string}  json{"code", "message"}
-// @Failure      500  {string}  json{"status", "message"}
+// @Param        ent formData service.AddEntDto true "创建企业参数"
+// @Success      200  {object} response.Response
+// @Failure      400  {object} response.Response
 // @Router       /v1/ents [post]
-// func Create(c *gin.Context) {
-// 	var addEntReq model.AddEntReq
-// 	if err := c.ShouldBind(&addEntReq); err != nil {
-// 		c.JSON(http.StatusBadRequest, gin.H{"message": fmt.Sprint(err)})
-// 		return
-// 	}
-// 	err := ent_service.CreateEnt(&addEntReq)
-// 	if err != nil {
-// 		c.JSON(http.StatusBadRequest, gin.H{"message": fmt.Sprint(err)})
-// 		return
-// 	}
-// 	c.JSON(http.StatusOK, gin.H{"message": "ent created", "status": 200})
-// }
-
-// func Update(c *gin.Context) {
-// 	var updateEntReq model.UpdateEntReq
-// 	if err := c.ShouldBind(&updateEntReq); err != nil {
-// 		c.JSON(http.StatusBadRequest, gin.H{"message": fmt.Sprint(err)})
-// 		return
-// 	}
-// 	entId, _ := strconv.Atoi(c.Param("id"))
-// 	err := ent_service.UpdateEnt(entId, &updateEntReq)
-// 	if err != nil {
-// 		c.JSON(http.StatusBadRequest, gin.H{"message": fmt.Sprint(err)})
-// 		return
-// 	}
-// 	c.JSON(http.StatusOK, gin.H{"message": "ent updated", "status": 200})
-// }
-
-// func Delete(c *gin.Context) {
-// 	c.JSON(http.StatusOK, gin.H{"message": "delete ent", "status": 200})
-// }
+func (c *EntController) Create(ctx *gin.Context) {
+	var addEntDto service.AddEntDto
+	if err := ctx.ShouldBind(&addEntDto); err != nil {
+		response.JSON(ctx, e.ValidateErr, fmt.Sprint(err))
+		return
+	}
+	err := c.entService.CreateEnt(&addEntDto)
+	if err != nil {
+		response.JSON(ctx, e.BadRequestErr, fmt.Sprint(err))
+	}
+	response.JSON(ctx, e.Success, "企业创建成功")
+}
