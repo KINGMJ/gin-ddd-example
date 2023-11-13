@@ -12,16 +12,30 @@ import (
 var Conf = new(Config)
 
 type Config struct {
-	DBConfig DBConfig `mapstructure:"database"` // 数据库信息
+	DBConf    DBConf    `mapstructure:"database"` // 数据库信息
+	RedisConf RedisConf `mapstructure:"redis"`    // redis 配置
 }
 
-type DBConfig struct {
+type DBConf struct {
 	Dbname   string `mapstructure:"dbname"`
 	Host     string `mapstructure:"host"`
 	Port     string `mapstructure:"port"`
 	User     string `mapstructure:"user"`
 	Password string `mapstructure:"password"`
 	TimeZone string `mapstructure:"timezone"`
+}
+
+type RedisConf struct {
+	// redis服务器地址，ip:port格式，比如：192.168.1.100:6379
+	// 默认为 :6379
+	Addr     string `mapstructure:"address"`
+	Password string `mapstructure:"password"`
+	// redis DB 数据库，默认为0
+	Db int `mapstructure:"db"`
+	// 连接池最大连接数量
+	PoolSize int `mapstructure:"pool-size"`
+	// 连接池保持的最小空闲连接数，它受到PoolSize的限制
+	MinIdleConns int `mapstructure:"min-idle-conns"`
 }
 
 func InitConfig() {

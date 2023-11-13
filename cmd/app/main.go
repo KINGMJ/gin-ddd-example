@@ -2,6 +2,7 @@ package main
 
 import (
 	"gin-ddd-example/docs"
+	"gin-ddd-example/pkg/cache"
 	"gin-ddd-example/pkg/config"
 	"gin-ddd-example/pkg/db"
 	"gin-ddd-example/pkg/validate"
@@ -31,6 +32,7 @@ import (
 func main() {
 	// 初始化操作
 	config.InitConfig()
+	cache.InitRedis(*config.Conf)
 	database := db.InitDb()
 
 	// swagger 配置

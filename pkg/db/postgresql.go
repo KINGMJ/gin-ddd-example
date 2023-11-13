@@ -17,7 +17,7 @@ type Database struct {
 
 // 初始化db链接
 func InitDb() *Database {
-	c := config.Conf.DBConfig
+	c := config.Conf.DBConf
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s TimeZone=%s",
 		c.Host,
 		c.User,
