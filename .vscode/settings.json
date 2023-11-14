@@ -1,9 +1,13 @@
 {
     "cSpell.words": [
+        "amqp",
         "dbname",
         "ents",
         "gorm",
         "mapstructure",
+        "Mqurl",
+        "rabbitmq",
+        "routekey",
         "signup"
     ]
 }

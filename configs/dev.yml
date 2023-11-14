@@ -12,3 +12,9 @@ redis:
   db: 0
   pool-size: 100
   min-idle-conns: 10
+
+rabbitmq:
+  user: guest
+  password: guest
+  host: localhost
+  port: 5672

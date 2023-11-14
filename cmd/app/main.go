@@ -5,6 +5,7 @@ import (
 	"gin-ddd-example/pkg/cache"
 	"gin-ddd-example/pkg/config"
 	"gin-ddd-example/pkg/db"
+	"gin-ddd-example/pkg/rabbitmq"
 	"gin-ddd-example/pkg/validate"
 
 	"github.com/gin-gonic/gin"
@@ -33,6 +34,7 @@ func main() {
 	// 初始化操作
 	config.InitConfig()
 	cache.InitRedis(*config.Conf)
+	rabbitmq.InitRabbitmq(*config.Conf)
 	database := db.InitDb()
 
 	// swagger 配置

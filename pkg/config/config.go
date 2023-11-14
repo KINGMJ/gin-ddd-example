@@ -12,8 +12,9 @@ import (
 var Conf = new(Config)
 
 type Config struct {
-	DBConf    DBConf    `mapstructure:"database"` // 数据库信息
-	RedisConf RedisConf `mapstructure:"redis"`    // redis 配置
+	DBConf       DBConf       `mapstructure:"database"` // 数据库信息
+	RedisConf    RedisConf    `mapstructure:"redis"`    // redis 配置
+	RabbitmqConf RabbitmqConf `mapstructure:"rabbitmq"` // rabbitmq 配置
 }
 
 type DBConf struct {
@@ -38,6 +39,13 @@ type RedisConf struct {
 	MinIdleConns int `mapstructure:"min-idle-conns"`
 }
 
+type RabbitmqConf struct {
+	Host     string `mapstructure:"host"`
+	Port     string `mapstructure:"port"`
+	User     string `mapstructure:"user"`
+	Password string `mapstructure:"password"`
+}
+
 func InitConfig() {
 	var configPath string
 	configEnv := os.Getenv("GO_ENV")
@@ -49,7 +57,8 @@ func InitConfig() {
 	case "prod":
 		configPath = "../../configs/prod.yml"
 	default:
-		configPath = "../../configs/dev.yml"
+		// configPath = "../../configs/dev.yml"
+		configPath = "configs/dev.yml"
 	}
 	// 指定配置文件路径
 	viper.SetConfigFile(configPath)
