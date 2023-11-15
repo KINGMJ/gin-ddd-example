@@ -37,7 +37,7 @@ func (c *EntController) List(ctx *gin.Context) {
 // @Tags         ents
 // @Accept       json
 // @Produce      json
-// @Param        ent formData service.AddEntDto true "创建企业参数"
+// @Param        ent body service.AddEntDto true "创建企业参数"
 // @Success      200  {object} response.Response
 // @Failure      400  {object} response.Response
 // @Router       /v1/ents [post]

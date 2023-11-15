@@ -12,3 +12,7 @@ type Ent struct {
 	AssignedProviders string
 	Edition           uint8 `gorm:"default:1"`
 }
+
+func (table *Ent) TableName() string {
+	return "ent"
+}

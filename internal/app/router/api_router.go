@@ -9,20 +9,25 @@ import (
 )
 
 type ApiRouter struct {
-	entController *controller.EntController
+	entController  *controller.EntController
+	authController *controller.AuthController
 }
 
 func NewApiRouter(
 	entController *controller.EntController,
+	authController *controller.AuthController,
 ) *ApiRouter {
 	return &ApiRouter{
-		entController,
+		entController, authController,
 	}
 }
 
 // 设置 route
 func (ar *ApiRouter) SetupRoutes(r *gin.Engine) {
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
+	r.POST("/auth/signup", ar.authController.Signup)
+
 	v1 := r.Group("/v1")
 	{
 		v1.GET("/ents", ar.entController.List)
