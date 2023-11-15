@@ -28,16 +28,11 @@ func (r *RabbitMQ) PublishSimple(message string) {
 	// 1.申请队列，如果队列不存在会自动创建，存在则跳过创建
 	_, err := r.channel.QueueDeclare(
 		r.QueueName,
-		//是否持久化
-		false,
-		//是否自动删除
-		false,
-		//是否具有排他性
-		false,
-		//是否阻塞处理
-		false,
-		//额外的属性
-		nil,
+		false, //是否持久化
+		false, //是否自动删除
+		false, //是否具有排他性
+		false, //是否阻塞处理
+		nil,   //额外的属性
 	)
 	r.failOnErr(err, "Failed to declare a queue")
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
@@ -45,10 +40,10 @@ func (r *RabbitMQ) PublishSimple(message string) {
 
 	//调用 channel 发送消息到队列中
 	err = r.channel.PublishWithContext(ctx,
-		r.Exchange,  // 交换机
-		r.QueueName, // 队列名称
-		false,       // mandatory， 如果为true，根据自身exchange类型和routekey规则无法找到符合条件的队列会把消息返还给发送者
-		false,       // immediate
+		r.Exchange, // 交换机
+		r.QueueName,
+		false, // mandatory， 如果为true，根据自身exchange类型和routekey规则无法找到符合条件的队列会把消息返还给发送者
+		false, // immediate
 		amqp.Publishing{
 			ContentType: "text/plain",
 			Body:        []byte(message),
@@ -61,16 +56,11 @@ func (r *RabbitMQ) ReceiveSimple() {
 	// 1.申请队列，如果队列不存在会自动创建，存在则跳过创建
 	queue, err := r.channel.QueueDeclare(
 		r.QueueName,
-		//是否持久化
-		false,
-		//是否自动删除
-		false,
-		//是否具有排他性
-		false,
-		//是否阻塞处理
-		false,
-		//额外的属性
-		nil,
+		false, //是否持久化
+		false, //是否自动删除
+		false, //是否具有排他性
+		false, //是否阻塞处理
+		nil,   //额外的属性
 	)
 	r.failOnErr(err, "Failed to declare a queue")
 

@@ -11,10 +11,30 @@ func init() {
 }
 
 func main() {
-	simpleReceive()
+	topicReceive()
 }
 
 func simpleReceive() {
 	mq := rabbitmq.NewRabbitMQSimple("hello")
 	mq.ReceiveSimple()
+}
+
+func workReceive() {
+	mq := rabbitmq.NewRabbitMQSimple("work")
+	mq.ReceiveWork()
+}
+
+func pubSubReceive() {
+	mq := rabbitmq.NewRabbitMQPubSub("logs")
+	mq.ReceiveSub()
+}
+
+func routingReceive() {
+	mq := rabbitmq.NewRabbitMQRouting("logs_direct", "keyA")
+	mq.ReceiveRouting()
+}
+
+func topicReceive() {
+	mq := rabbitmq.NewRabbitMQTopic("logs_topic")
+	mq.ReceiveTopic()
 }
