@@ -2,9 +2,14 @@ package main
 
 import (
 	"gin-ddd-example/docs"
+	"gin-ddd-example/internal/app/controller"
+	"gin-ddd-example/internal/app/repo"
+	"gin-ddd-example/internal/app/router"
+	"gin-ddd-example/internal/app/service"
 	"gin-ddd-example/pkg/cache"
 	"gin-ddd-example/pkg/config"
 	"gin-ddd-example/pkg/db"
+	"gin-ddd-example/pkg/logs"
 	"gin-ddd-example/pkg/rabbitmq"
 	"gin-ddd-example/pkg/validate"
 
@@ -35,6 +40,10 @@ func main() {
 	config.InitConfig()
 	cache.InitRedis(*config.Conf)
 	rabbitmq.InitRabbitmq(*config.Conf)
+	// 日志初始化
+	logs.InitLog(*config.Conf)
+	logs.Log.Info("log init success!")
+
 	database := db.InitDb()
 
 	// swagger 配置
@@ -54,4 +63,18 @@ func main() {
 	apiRouter.SetupRoutes(r)
 	// 运行服务
 	r.Run()
+
+}
+
+// Injectors from wire.go:
+
+func InitApp(database *db.Database) *router.ApiRouter {
+	entRepoImpl := repo.NewEntRepo(database)
+	entServiceImpl := service.NewEntService(entRepoImpl)
+	entController := controller.NewEntController(entServiceImpl)
+	userRepoImpl := repo.NewUserRepo(database)
+	authServiceImpl := service.NewAuthService(userRepoImpl)
+	authController := controller.NewAuthController(authServiceImpl)
+	apiRouter := router.NewApiRouter(entController, authController)
+	return apiRouter
 }

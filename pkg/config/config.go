@@ -12,9 +12,15 @@ import (
 var Conf = new(Config)
 
 type Config struct {
+	AppConf      AppConf      `mapstructure:"app"`      // app 配置
 	DBConf       DBConf       `mapstructure:"database"` // 数据库信息
 	RedisConf    RedisConf    `mapstructure:"redis"`    // redis 配置
 	RabbitmqConf RabbitmqConf `mapstructure:"rabbitmq"` // rabbitmq 配置
+	LogsConf     LogsConf     `mapstructure:"logs"`     // 日志配置
+}
+
+type AppConf struct {
+	Env string `mapstructure:"env"`
 }
 
 type DBConf struct {
@@ -46,6 +52,18 @@ type RabbitmqConf struct {
 	Password string `mapstructure:"password"`
 }
 
+type LogsConf struct {
+	Level      string `mapstructure:"level"`       // 日志级别
+	RootDir    string `mapstructure:"root_dir"`    // 日志文件存放位置
+	Format     string `mapstructure:"format"`      // 格式：json 或者其他格式
+	Filename   string `mapstructure:"filename"`    // 日志文件名
+	MaxSize    int    `mapstructure:"max_size"`    // 日志文件最大大小(M)
+	MaxBackups int    `mapstructure:"max_backups"` // 旧文件的最大个数
+	MaxAge     int    `mapstructure:"max_age"`     // 旧文件的最大保留天数
+	Compress   bool   `mapstructure:"compress"`    // 是否压缩
+	ShowLine   bool   `mapstructure:"show_line"`   // 是否显示调用行
+}
+
 func InitConfig() {
 	var configPath string
 	configEnv := os.Getenv("GO_ENV")
@@ -57,8 +75,8 @@ func InitConfig() {
 	case "prod":
 		configPath = "../../configs/prod.yml"
 	default:
-		configPath = "../../configs/dev.yml"
-		// configPath = "configs/dev.yml"
+		// configPath = "../../configs/dev.yml"
+		configPath = "configs/dev.yml"
 	}
 	// 指定配置文件路径
 	viper.SetConfigFile(configPath)

@@ -16,13 +16,13 @@ import (
 
 // Injectors from wire.go:
 
-func InitApp(database *db.Database) *router.ApiRouter {
-	entRepoImpl := repo.NewEntRepo(database)
-	entServiceImpl := service.NewEntService(entRepoImpl)
-	entController := controller.NewEntController(entServiceImpl)
-	userRepoImpl := repo.NewUserRepo(database)
-	authServiceImpl := service.NewAuthService(userRepoImpl)
-	authController := controller.NewAuthController(authServiceImpl)
-	apiRouter := router.NewApiRouter(entController, authController)
-	return apiRouter
-}
+// func InitApp(database *db.Database) *router.ApiRouter {
+// 	entRepoImpl := repo.NewEntRepo(database)
+// 	entServiceImpl := service.NewEntService(entRepoImpl)
+// 	entController := controller.NewEntController(entServiceImpl)
+// 	userRepoImpl := repo.NewUserRepo(database)
+// 	authServiceImpl := service.NewAuthService(userRepoImpl)
+// 	authController := controller.NewAuthController(authServiceImpl)
+// 	apiRouter := router.NewApiRouter(entController, authController)
+// 	return apiRouter
+// }
