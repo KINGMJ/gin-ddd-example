@@ -47,7 +47,7 @@ func (r *RabbitMQ) PublishPub() {
 	// 2. 调用 channel 发送消息到队列中
 	err = r.channel.PublishWithContext(ctx,
 		r.Exchange, // 交换机
-		"",         // 队列名称
+		"",         // routing key 名称
 		false,      // mandatory， 如果为true，根据自身exchange类型和routekey规则无法找到符合条件的队列会把消息返还给发送者
 		false,      // immediate
 		amqp.Publishing{

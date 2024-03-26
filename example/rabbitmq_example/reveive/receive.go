@@ -11,7 +11,8 @@ func init() {
 }
 
 func main() {
-	topicReceive()
+	mq := rabbitmq.NewDead("normal_exchange", "queenA", "keyA")
+	mq.ReceiveMessage()
 }
 
 func simpleReceive() {

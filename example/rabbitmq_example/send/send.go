@@ -11,7 +11,8 @@ func init() {
 }
 
 func main() {
-	topicSend()
+	mq := rabbitmq.NewDead("normal_exchange", "queenA", "keyA")
+	mq.PublishMessage()
 }
 
 func simpleSend() {
