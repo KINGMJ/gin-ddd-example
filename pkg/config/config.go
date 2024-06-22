@@ -17,6 +17,7 @@ type Config struct {
 	RedisConf    RedisConf    `mapstructure:"redis"`    // redis 配置
 	RabbitmqConf RabbitmqConf `mapstructure:"rabbitmq"` // rabbitmq 配置
 	LogsConf     LogsConf     `mapstructure:"logs"`     // 日志配置
+	KafkaConf    KafkaConf    `mapstructure:"kafka"`    // kafka 配置
 }
 
 type AppConf struct {
@@ -52,6 +53,11 @@ type RabbitmqConf struct {
 	Password string `mapstructure:"password"`
 }
 
+type KafkaConf struct {
+	Host string `mapstructure:"host"`
+	Port string `mapstructure:"port"`
+}
+
 type LogsConf struct {
 	Level      string `mapstructure:"level"`       // 日志级别
 	RootDir    string `mapstructure:"root_dir"`    // 日志文件存放位置
@@ -75,8 +81,8 @@ func InitConfig() {
 	case "prod":
 		configPath = "../../configs/prod.yml"
 	default:
-		// configPath = "../../configs/dev.yml"
-		configPath = "configs/dev.yml"
+		configPath = "../../configs/dev.yml"
+		// configPath = "configs/dev.yml"
 	}
 	// 指定配置文件路径
 	viper.SetConfigFile(configPath)

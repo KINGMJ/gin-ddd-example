@@ -1,31 +1,22 @@
 package main
 
 import (
-	"context"
-	"log"
-	"time"
-
-	"github.com/segmentio/kafka-go"
+	"gin-ddd-example/pkg/config"
+	"gin-ddd-example/pkg/kafka_client"
 )
 
-func main() {
-	topic := "my-topic"
-	partition := 0
+func init() {
+	config.InitConfig()
+	kafka_client.InitKafka(*config.Conf)
+}
 
-	conn, err := kafka.DialLeader(context.Background(), "tcp", "localhost:9092", topic, partition)
-	if err != nil {
-		log.Fatal("failed to dial leader:", err)
-	}
-	conn.SetWriteDeadline(time.Now().Add(10 * time.Second))
-	_, err = conn.WriteMessages(
-		kafka.Message{Value: []byte("one!")},
-		kafka.Message{Value: []byte("tow!")},
-		kafka.Message{Value: []byte("three!")},
-	)
-	if err != nil {
-		log.Fatal("failed to write messages:", err)
-	}
-	if err := conn.Close(); err != nil {
-		log.Fatal("failed to close writer:", err)
-	}
+func main() {
+	simpleSend()
+}
+
+func simpleSend() {
+	topic := "test_simple_topic"
+	partition := 0
+	client := kafka_client.NewKafkaSimple(topic, partition)
+	client.PublishSimple()
 }
