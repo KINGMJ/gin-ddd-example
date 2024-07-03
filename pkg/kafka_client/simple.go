@@ -36,7 +36,7 @@ func (client *KafkaClient) ReceiveSimple() {
 	client.Conn.SetReadDeadline(time.Now().Add(5 * time.Second))
 	// 读取一批消息，得到的batch是一系列消息的迭代器
 	// 【注意：】这里最小值和最大值设置会影响 batch 的关闭。我们最小设置为 1e1，也就是10byte，
-	batch := client.Conn.ReadBatch(1e3, 10e3) // e3 = 10^3(kb), e6= 10^6(mb)
+	batch := client.Conn.ReadBatch(1e1, 10e3) // e3 = 10^3(kb), e6= 10^6(mb)
 	// 遍历读取消息
 	b := make([]byte, 10e3) // 1kb max per message
 	for {
@@ -45,6 +45,24 @@ func (client *KafkaClient) ReceiveSimple() {
 			break
 		}
 		fmt.Printf("[*] Receive %s\n", string(b[:n]))
+	}
+	// 关闭batch
+	err := batch.Close()
+	client.failOnErr(err, "Failed to close batch")
+	// 关闭连接
+	defer client.Close()
+}
+
+// 使用 batch.ReadMessage 读取消息
+func (client *KafkaClient) ReceiveSimple2() {
+	client.Conn.SetReadDeadline(time.Now().Add(5 * time.Second))
+	batch := client.Conn.ReadBatch(1e1, 10e3) // e3 = 10^3(kb), e6= 10^6(mb)
+	for {
+		msg, err := batch.ReadMessage()
+		if err != nil {
+			break
+		}
+		fmt.Println(string(msg.Value))
 	}
 	// 关闭batch
 	err := batch.Close()

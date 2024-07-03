@@ -18,5 +18,5 @@ func simpleReceive() {
 	topic := "test_simple_topic"
 	partition := 0
 	client := kafka_client.NewKafkaSimple(topic, partition)
-	client.ReceiveSimple()
+	client.ReceiveSimple2()
 }
