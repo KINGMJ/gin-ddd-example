@@ -9,9 +9,11 @@ import (
 )
 
 type KafkaClient struct {
-	Conn  *kafka.Conn
-	Dsn   string // 连接信息
-	Topic string // 主题
+	Conn              *kafka.Conn
+	Dsn               string // 连接信息
+	Topic             string // 主题
+	NumPartitions     int    // 分区数量
+	ReplicationFactor int    // 副本数量
 }
 
 var dsn string

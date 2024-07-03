@@ -6,13 +6,13 @@
 
 package main
 
-import (
-	"gin-ddd-example/internal/app/controller"
-	"gin-ddd-example/internal/app/repo"
-	"gin-ddd-example/internal/app/router"
-	"gin-ddd-example/internal/app/service"
-	"gin-ddd-example/pkg/db"
-)
+// import (
+// 	"gin-ddd-example/internal/app/controller"
+// 	"gin-ddd-example/internal/app/repo"
+// 	"gin-ddd-example/internal/app/router"
+// 	"gin-ddd-example/internal/app/service"
+// 	"gin-ddd-example/pkg/db"
+// )
 
 // Injectors from wire.go:
 

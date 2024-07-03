@@ -11,7 +11,7 @@ func init() {
 }
 
 func main() {
-	createTopicDemo()
+	writterDemo()
 }
 
 func simpleSendDemo() {
@@ -23,6 +23,11 @@ func simpleSendDemo() {
 
 func createTopicDemo() {
 	topic := "test_create_topic"
-	client := kafka_client.NewCreateTopic(topic)
+	client := kafka_client.NewCreateTopic(topic, 3, 3)
 	client.CreateTopic()
+}
+
+func writterDemo() {
+	client := kafka_client.NewKafkaWritter("test_create_topic")
+	client.PublishMessage()
 }

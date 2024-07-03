@@ -7,7 +7,9 @@ import (
 	"github.com/segmentio/kafka-go"
 )
 
-func NewCreateTopic(topic string) *KafkaClient {
+// 创建一个topic
+
+func NewCreateTopic(topic string, numPartitions, replicationFactor int) *KafkaClient {
 	client := NewKafkaClient()
 	// 连接至kafka任意节点
 	conn, err := kafka.Dial("tcp", client.Dsn)
@@ -15,12 +17,15 @@ func NewCreateTopic(topic string) *KafkaClient {
 
 	client.Conn = conn
 	client.Topic = topic
+	client.NumPartitions = numPartitions
+	client.ReplicationFactor = replicationFactor
 
 	return client
 }
 
 func (client *KafkaClient) CreateTopic() {
 	// 获取当前控制节点信息
+	// 控制器节点是Kafka集群中负责管理分区的领导选举和其他重要元数据操作的节点
 	controller, err := client.Conn.Controller()
 	client.failOnErr(err, "Failed to get controller")
 
@@ -32,8 +37,8 @@ func (client *KafkaClient) CreateTopic() {
 	topicConfigs := []kafka.TopicConfig{
 		{
 			Topic:             client.Topic,
-			NumPartitions:     4, // 分区数量
-			ReplicationFactor: 1, // 每个分区的副本数，不能超过broker的数量，否则创建失败
+			NumPartitions:     client.NumPartitions,     // 分区数量
+			ReplicationFactor: client.ReplicationFactor, // 每个分区的副本数，不能超过broker的数量，否则创建失败
 		},
 	}
 	// 创建topic
