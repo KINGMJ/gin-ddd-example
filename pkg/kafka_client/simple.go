@@ -8,8 +8,10 @@ import (
 	"github.com/segmentio/kafka-go"
 )
 
+// 一个最简单的生产者和消费者示例
+// 生产者和消费者都使用DialLeader连接到Leader Broker的指定分区
 func NewKafkaSimple(topic string, partition int) *KafkaClient {
-	client := NewKafkaClient(topic, partition)
+	client := NewKafkaClient()
 	// 连接至 Kafka集群的Leader节点
 	conn, err := kafka.DialLeader(context.Background(), "tcp", client.Dsn, topic, partition)
 	client.failOnErr(err, "Failed to dial leader")

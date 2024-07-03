@@ -11,12 +11,18 @@ func init() {
 }
 
 func main() {
-	simpleSend()
+	createTopicDemo()
 }
 
-func simpleSend() {
+func simpleSendDemo() {
 	topic := "test_simple_topic"
 	partition := 0
 	client := kafka_client.NewKafkaSimple(topic, partition)
 	client.PublishSimple()
+}
+
+func createTopicDemo() {
+	topic := "test_create_topic"
+	client := kafka_client.NewCreateTopic(topic)
+	client.CreateTopic()
 }

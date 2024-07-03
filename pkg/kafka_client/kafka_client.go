@@ -9,11 +9,9 @@ import (
 )
 
 type KafkaClient struct {
-	Conn      *kafka.Conn
-	Topic     string
-	Partition int
-	// 连接信息
-	Dsn string
+	Conn  *kafka.Conn
+	Dsn   string // 连接信息
+	Topic string // 主题
 }
 
 var dsn string
@@ -23,8 +21,8 @@ func InitKafka(config config.Config) {
 }
 
 // 创建结构体实例
-func NewKafkaClient(topic string, partition int) *KafkaClient {
-	return &KafkaClient{Dsn: dsn, Topic: topic, Partition: partition}
+func NewKafkaClient() *KafkaClient {
+	return &KafkaClient{Dsn: dsn}
 }
 
 // 断开连接
@@ -36,7 +34,7 @@ func (r *KafkaClient) Close() {
 // 错误处理函数
 func (r *KafkaClient) failOnErr(err error, message string) {
 	if err != nil {
-		log.Fatalf("%s:%s", message, err)
+		log.Fatalf("%s: %s", message, err)
 		panic(fmt.Sprintf("%s:%s", message, err))
 	}
 }
