@@ -3,6 +3,9 @@ package main
 import (
 	"gin-ddd-example/pkg/config"
 	"gin-ddd-example/pkg/kafka_client"
+	"gin-ddd-example/pkg/utils"
+
+	"github.com/segmentio/kafka-go"
 )
 
 func init() {
@@ -21,13 +24,27 @@ func simpleSendDemo() {
 	client.PublishSimple()
 }
 
+// 创建主题
 func createTopicDemo() {
-	topic := "test_create_topic"
-	client := kafka_client.NewCreateTopic(topic, 3, 3)
+	topic := "user_registered"
+	client := kafka_client.NewCreateTopic(topic, 2, 3)
 	client.CreateTopic()
 }
 
+// 发送消息
 func writterDemo() {
-	client := kafka_client.NewKafkaWritter("test_create_topic")
+	client := kafka_client.NewKafkaWritter("user_registered")
 	client.PublishMessage()
+}
+
+// 获取 Topic 的分区信息
+func getPartitionsDemo() {
+	client := kafka_client.NewKafkaClient()
+	conn, err := kafka.Dial("tcp", client.Dsn)
+	client.FailOnErr(err, "Failed to dail broker")
+
+	partitions, err := conn.ReadPartitions("user_registered")
+	client.FailOnErr(err, "Failed to read partitions")
+
+	utils.PrettyJson(partitions)
 }

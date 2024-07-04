@@ -14,7 +14,7 @@ func NewKafkaSimple(topic string, partition int) *KafkaClient {
 	client := NewKafkaClient()
 	// 连接至 Kafka集群的Leader节点
 	conn, err := kafka.DialLeader(context.Background(), "tcp", client.Dsn, topic, partition)
-	client.failOnErr(err, "Failed to dial leader")
+	client.FailOnErr(err, "Failed to dial leader")
 	client.Conn = conn
 	return client
 }
@@ -28,7 +28,7 @@ func (client *KafkaClient) PublishSimple() {
 		kafka.Message{Value: []byte("tow!")},
 		kafka.Message{Value: []byte("three!")},
 	)
-	client.failOnErr(err, "Failed to send message")
+	client.FailOnErr(err, "Failed to send message")
 	// 关闭连接
 	client.Close()
 }
@@ -50,7 +50,7 @@ func (client *KafkaClient) ReceiveSimple() {
 	}
 	// 关闭batch
 	err := batch.Close()
-	client.failOnErr(err, "Failed to close batch")
+	client.FailOnErr(err, "Failed to close batch")
 	// 关闭连接
 	defer client.Close()
 }
@@ -68,7 +68,7 @@ func (client *KafkaClient) ReceiveSimple2() {
 	}
 	// 关闭batch
 	err := batch.Close()
-	client.failOnErr(err, "Failed to close batch")
+	client.FailOnErr(err, "Failed to close batch")
 	// 关闭连接
 	defer client.Close()
 }

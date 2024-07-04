@@ -30,11 +30,11 @@ func NewKafkaClient() *KafkaClient {
 // 断开连接
 func (r *KafkaClient) Close() {
 	err := r.Conn.Close()
-	r.failOnErr(err, "Failed to close client")
+	r.FailOnErr(err, "Failed to close client")
 }
 
 // 错误处理函数
-func (r *KafkaClient) failOnErr(err error, message string) {
+func (r *KafkaClient) FailOnErr(err error, message string) {
 	if err != nil {
 		log.Fatalf("%s: %s", message, err)
 		panic(fmt.Sprintf("%s:%s", message, err))
