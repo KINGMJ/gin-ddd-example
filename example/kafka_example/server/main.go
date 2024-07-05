@@ -14,7 +14,7 @@ func init() {
 }
 
 func main() {
-	writterDemo()
+	writterDemo2()
 }
 
 func simpleSendDemo() {
@@ -35,6 +35,12 @@ func createTopicDemo() {
 func writterDemo() {
 	client := kafka_client.NewKafkaWritter("user_registered")
 	client.PublishMessage()
+}
+
+// 消息压缩示例
+func writterDemo2() {
+	client := kafka_client.NewKafkaWritter("test_simple_topic")
+	client.PublishMessage2()
 }
 
 // 获取 Topic 的分区信息
