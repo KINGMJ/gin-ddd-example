@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"gin-ddd-example/pkg/config"
 	"gin-ddd-example/pkg/kafka_client"
 	"gin-ddd-example/pkg/utils"
@@ -41,6 +42,7 @@ func writterDemo() {
 func writterDemo2() {
 	client := kafka_client.NewKafkaWritter("test_simple_topic")
 	client.PublishMessage2()
+	fmt.Println("发送成功，继续后面的业务操作...")
 }
 
 // 获取 Topic 的分区信息

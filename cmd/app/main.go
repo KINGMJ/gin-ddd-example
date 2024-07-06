@@ -28,7 +28,7 @@ import (
 // @license.name  Apache 2.0
 // @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
 
-// @host      localhost:8080
+// @host      localhost:8070
 // @BasePath  /
 
 // @securityDefinitions.basic  BasicAuth
@@ -50,7 +50,7 @@ func main() {
 	docs.SwaggerInfo.Title = "Swagger Example API"
 	docs.SwaggerInfo.Description = "This is a sample server Petstore server."
 	docs.SwaggerInfo.Version = "1.0"
-	docs.SwaggerInfo.Host = "localhost:8080"
+	docs.SwaggerInfo.Host = "localhost:8070"
 	docs.SwaggerInfo.BasePath = ""
 	docs.SwaggerInfo.Schemes = []string{"http", "https"}
 
@@ -62,7 +62,7 @@ func main() {
 	// 创建路由
 	apiRouter.SetupRoutes(r)
 	// 运行服务
-	r.Run()
+	r.Run(":8071")
 
 }
 
