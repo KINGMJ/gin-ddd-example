@@ -15,7 +15,7 @@ func init() {
 }
 
 func main() {
-	writterDemo2()
+	writerDemo2()
 }
 
 func simpleSendDemo() {
@@ -27,21 +27,34 @@ func simpleSendDemo() {
 
 // 创建主题
 func createTopicDemo() {
-	topic := "user_registered"
+	topic := "file-events"
 	client := kafka_client.NewCreateTopic(topic, 2, 3)
 	client.CreateTopic()
 }
 
 // 发送消息
-func writterDemo() {
-	client := kafka_client.NewKafkaWritter("user_registered")
+func writerDemo() {
+	client := kafka_client.NewKafkaWriter("user_registered")
 	client.PublishMessage()
 }
 
-// 消息压缩示例
-func writterDemo2() {
-	client := kafka_client.NewKafkaWritter("test_simple_topic")
+// 正常发送消息
+func writerDemo2() {
+	client := kafka_client.NewKafkaWriter("board-events")
 	client.PublishMessage2()
+
+	client1 := kafka_client.NewKafkaWriter("task-events")
+	client1.PublishMessage2()
+
+	client3 := kafka_client.NewKafkaWriter("file-events")
+	client3.PublishMessage2()
+}
+
+// 消息压缩示例
+// 消息丢失示例
+func writerDemo3() {
+	client := kafka_client.NewKafkaWriter("test_simple_topic")
+	client.PublishMessage3()
 	fmt.Println("发送成功，继续后面的业务操作...")
 }
 

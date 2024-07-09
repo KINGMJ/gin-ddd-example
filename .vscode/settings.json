@@ -1,11 +1,14 @@
 {
     "cSpell.words": [
+        "Acks",
         "amqp",
+        "dail",
         "dbname",
         "ents",
         "gorm",
         "mapstructure",
         "Mqurl",
+        "pfctl",
         "rabbitmq",
         "routekey",
         "signup"

@@ -9,7 +9,8 @@ import (
 	"github.com/segmentio/kafka-go"
 )
 
-func NewKafkaWritter(topic string) *KafkaClient {
+// 自定义分区策略
+func NewKafkaWriter(topic string) *KafkaClient {
 	client := NewKafkaClient()
 	client.Topic = topic
 	return client
@@ -96,4 +97,30 @@ func (r *GeoBalancer) Balance(msg kafka.Message, partitions ...int) int {
 		return northKey
 	}
 	return southKey
+}
+
+// 正常发送消息
+func (client *KafkaClient) PublishMessage2() {
+	// 创建一个 writer 向 Topic 发送消息
+	writer := kafka.Writer{
+		Addr:         kafka.TCP(client.Dsn),
+		Topic:        client.Topic,
+		Balancer:     &kafka.RoundRobin{}, // 轮询策略
+		Compression:  kafka.Gzip,          // 使用 Gzip 压缩
+		RequiredAcks: kafka.RequireAll,    // acks = all
+	}
+	defer writer.Close()
+
+	var msgs []kafka.Message
+
+	// 发送10条
+	for i := 0; i < 10; i++ {
+		msg := kafka.Message{
+			Key:   []byte(fmt.Sprintf("[Topic：%s]-Key%d", client.Topic, i)),
+			Value: []byte(fmt.Sprintf("[Topic: %s]: Hello Kafka %d", client.Topic, i)),
+		}
+		msgs = append(msgs, msg)
+	}
+	err := writer.WriteMessages(context.Background(), msgs...)
+	client.FailOnErr(err, "Failed to write msg")
 }

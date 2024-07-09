@@ -11,7 +11,7 @@ func init() {
 }
 
 func main() {
-	simpleReceive()
+	readerGroupDemo()
 }
 
 func simpleReceive() {
@@ -19,4 +19,18 @@ func simpleReceive() {
 	partition := 0
 	client := kafka_client.NewKafkaSimple(topic, partition)
 	client.ReceiveSimple2()
+}
+
+// 模拟读取消息
+func readerDemo() {
+	client := kafka_client.NewKafkaReader("test_simple_topic")
+	go client.ReceiveMessage3(0)
+	go client.ReceiveMessage3(1)
+	select {}
+}
+
+// 消费者组示例
+func readerGroupDemo() {
+	client := kafka_client.NewKafkaClient()
+	client.ReceiveMessage4()
 }
