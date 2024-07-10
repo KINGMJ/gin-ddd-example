@@ -40,14 +40,14 @@ func writerDemo() {
 
 // 正常发送消息
 func writerDemo2() {
-	client := kafka_client.NewKafkaWriter("board-events")
+	client := kafka_client.NewKafkaWriter("topic1")
 	client.PublishMessage2()
 
-	client1 := kafka_client.NewKafkaWriter("task-events")
+	client1 := kafka_client.NewKafkaWriter("topic2")
 	client1.PublishMessage2()
 
-	client3 := kafka_client.NewKafkaWriter("file-events")
-	client3.PublishMessage2()
+	// client3 := kafka_client.NewKafkaWriter("file-events")
+	// client3.PublishMessage2()
 }
 
 // 消息压缩示例

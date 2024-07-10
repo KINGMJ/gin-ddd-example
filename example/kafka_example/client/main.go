@@ -1,8 +1,13 @@
 package main
 
 import (
+	"context"
+	"fmt"
 	"gin-ddd-example/pkg/config"
 	"gin-ddd-example/pkg/kafka_client"
+	"os"
+	"os/signal"
+	"sync"
 )
 
 func init() {
@@ -11,7 +16,7 @@ func init() {
 }
 
 func main() {
-	readerGroupDemo()
+	rebalanceDemo1()
 }
 
 func simpleReceive() {
@@ -33,4 +38,43 @@ func readerDemo() {
 func readerGroupDemo() {
 	client := kafka_client.NewKafkaClient()
 	client.ReceiveMessage4()
+}
+
+func readerGroupDemo2() {
+	client := kafka_client.NewKafkaClient()
+	var wg sync.WaitGroup
+	wg.Add(1)
+	ctx, cancel := context.WithCancel(context.Background())
+
+	// go client.ReceiveMessage4_1(ctx, &wg)
+	go client.ReceiveMessage4_2(ctx, &wg)
+
+	// 捕获中断信号
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, os.Interrupt)
+	<-c
+
+	fmt.Println("Shutting down consumers...")
+	cancel()
+	wg.Wait()
+}
+
+// 重平衡示例
+func rebalanceDemo1() {
+	client := kafka_client.NewKafkaClient()
+	var wg sync.WaitGroup
+	wg.Add(2)
+	ctx, cancel := context.WithCancel(context.Background())
+
+	go client.ReceiveMessage4_1(ctx, &wg)
+	go client.ReceiveMessage4_1(ctx, &wg)
+
+	// 捕获中断信号
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, os.Interrupt)
+	<-c
+
+	fmt.Println("Shutting down consumers...")
+	cancel()
+	wg.Wait()
 }

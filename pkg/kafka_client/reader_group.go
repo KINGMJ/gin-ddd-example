@@ -3,7 +3,9 @@ package kafka_client
 import (
 	"context"
 	"fmt"
+	"log"
 	"sync"
+	"time"
 
 	"github.com/segmentio/kafka-go"
 )
@@ -29,12 +31,12 @@ func (client *KafkaClient) ReceiveMessage4() {
 func consumeTopic(ctx context.Context, broker string, groupId, topic string) {
 	// 创建 kafka Reader
 	reader := kafka.NewReader(kafka.ReaderConfig{
-		Brokers:  []string{broker},
-		Topic:    topic,
-		GroupID:  groupId,
-		MinBytes: 10e3,
-		MaxBytes: 10e6,
-		// CommitInterval: time.Second, // 1秒间隔提交偏移量
+		Brokers:        []string{broker},
+		Topic:          topic,
+		GroupID:        groupId,
+		MinBytes:       10e3,
+		MaxBytes:       10e6,
+		CommitInterval: time.Second, // 1秒间隔提交偏移量
 	})
 	defer reader.Close()
 	// 消费消息
@@ -52,8 +54,7 @@ func consumeTopic(ctx context.Context, broker string, groupId, topic string) {
 }
 
 // 使用context来管理多个消费者进行消费
-func (client *KafkaClient) ReceiveMessage5(ctx context.Context, wg *sync.WaitGroup) {
-	// 假设Topic的分区数都是1，我们设置1个客户端
+func (client *KafkaClient) ReceiveMessage4_1(ctx context.Context, wg *sync.WaitGroup) {
 	reader := kafka.NewReader(kafka.ReaderConfig{
 		Brokers:     []string{client.Dsn},
 		GroupID:     "group1",
@@ -76,6 +77,47 @@ func (client *KafkaClient) ReceiveMessage5(ctx context.Context, wg *sync.WaitGro
 				continue
 			}
 			fmt.Printf("Message from topic %s at offset %d: %s = %s\n", msg.Topic, msg.Offset, msg.Key, msg.Value)
+		}
+	}
+}
+
+// 手动提交位移
+func (client *KafkaClient) ReceiveMessage4_2(ctx context.Context, wg *sync.WaitGroup) {
+	reader := kafka.NewReader(kafka.ReaderConfig{
+		Brokers:     []string{client.Dsn},
+		GroupID:     "group1",
+		GroupTopics: []string{"topic1"},
+		MinBytes:    10e3,
+		MaxBytes:    10e6,
+	})
+	defer reader.Close()
+	defer wg.Done()
+
+	for {
+		select {
+		case <-ctx.Done():
+			fmt.Println("退出接收")
+			return
+		default:
+			msg, err := reader.FetchMessage(ctx)
+			if err != nil {
+				fmt.Printf("Failed to fetch message from topic %s: %v\n", msg.Topic, err)
+				continue
+			}
+			// 处理消息
+			fmt.Printf("Message from topic %s at offset %d: %s = %s\n", msg.Topic, msg.Offset, msg.Key, msg.Value)
+
+			// 模拟处理失败的情况
+			if string(msg.Key) == "[Topic：topic1]-Key1" {
+				fmt.Printf("Message offset %d processing failed, not committing offset", msg.Offset)
+				return
+			}
+			// 手动提交偏移量
+			if err := reader.CommitMessages(ctx, msg); err != nil {
+				log.Printf("Failed to commit message: %v", err)
+			} else {
+				fmt.Printf("Committed message at offset %d\n", msg.Offset)
+			}
 		}
 	}
 }

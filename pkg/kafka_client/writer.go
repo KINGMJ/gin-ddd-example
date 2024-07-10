@@ -116,8 +116,8 @@ func (client *KafkaClient) PublishMessage2() {
 	// 发送10条
 	for i := 0; i < 10; i++ {
 		msg := kafka.Message{
-			Key:   []byte(fmt.Sprintf("[Topic：%s]-Key%d", client.Topic, i)),
-			Value: []byte(fmt.Sprintf("[Topic: %s]: Hello Kafka %d", client.Topic, i)),
+			Key:   []byte(fmt.Sprintf("[%s]-Key%d", client.Topic, i)),
+			Value: []byte(fmt.Sprintf("[%s]: Hello Kafka %d", client.Topic, i)),
 		}
 		msgs = append(msgs, msg)
 	}
