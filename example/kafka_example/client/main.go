@@ -8,6 +8,7 @@ import (
 	"os"
 	"os/signal"
 	"sync"
+	"time"
 )
 
 func init() {
@@ -66,8 +67,11 @@ func rebalanceDemo1() {
 	wg.Add(2)
 	ctx, cancel := context.WithCancel(context.Background())
 
-	go client.ReceiveMessage4_1(ctx, &wg)
-	go client.ReceiveMessage4_1(ctx, &wg)
+	go client.RebalanceReceive(1, ctx, &wg)
+
+	// 5s后开启另一个实例，触发rebalance
+	time.Sleep(5 * time.Second)
+	go client.RebalanceReceive(2, ctx, &wg)
 
 	// 捕获中断信号
 	c := make(chan os.Signal, 1)
