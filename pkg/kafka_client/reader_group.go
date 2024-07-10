@@ -3,6 +3,7 @@ package kafka_client
 import (
 	"context"
 	"fmt"
+	"sync"
 
 	"github.com/segmentio/kafka-go"
 )
@@ -47,5 +48,34 @@ func consumeTopic(ctx context.Context, broker string, groupId, topic string) {
 			continue
 		}
 		fmt.Printf("Message from topic %s at offset %d: %s = %s\n", topic, msg.Offset, msg.Key, msg.Value)
+	}
+}
+
+// 使用context来管理多个消费者进行消费
+func (client *KafkaClient) ReceiveMessage5(ctx context.Context, wg *sync.WaitGroup) {
+	// 假设Topic的分区数都是1，我们设置1个客户端
+	reader := kafka.NewReader(kafka.ReaderConfig{
+		Brokers:     []string{client.Dsn},
+		GroupID:     "group1",
+		GroupTopics: []string{"topic1", "topic2"},
+		MinBytes:    10e3,
+		MaxBytes:    10e6,
+	})
+	defer reader.Close()
+	defer wg.Done()
+
+	for {
+		select {
+		case <-ctx.Done():
+			fmt.Println("退出接收")
+			return
+		default:
+			msg, err := reader.ReadMessage(ctx)
+			if err != nil {
+				fmt.Printf("Failed to read message from topic %s: %v\n", msg.Topic, err)
+				continue
+			}
+			fmt.Printf("Message from topic %s at offset %d: %s = %s\n", msg.Topic, msg.Offset, msg.Key, msg.Value)
+		}
 	}
 }
