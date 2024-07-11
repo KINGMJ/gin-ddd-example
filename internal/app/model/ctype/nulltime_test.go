@@ -20,11 +20,11 @@ func TestNewNullTime(t *testing.T) {
 func TestNullTimeMarshalJSON(t *testing.T) {
 	now := time.Now()
 	nullTime := ctype.NewNullTime(now)
-
 	data, err := nullTime.MarshalJSON()
+
 	assert.NoError(t, err)
 
-	expectedData, err := json.Marshal(now)
+	expectedData, err := json.Marshal(now.Format(constants.TIME_FORMAT))
 	assert.NoError(t, err)
 	assert.Equal(t, expectedData, data)
 
@@ -36,6 +36,7 @@ func TestNullTimeMarshalJSON(t *testing.T) {
 
 func TestNullTimeUnmarshalJSON(t *testing.T) {
 	now := time.Now().Format(constants.TIME_FORMAT)
+
 	var nullTime ctype.NullTime
 
 	err := nullTime.UnmarshalJSON([]byte(now))

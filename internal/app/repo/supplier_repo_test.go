@@ -26,6 +26,7 @@ func TestFindById(t *testing.T) {
 	if err != nil {
 		fmt.Println(err)
 	}
+	fmt.Println(supplier)
 	utils.PrettyJson(supplier)
 }
 
