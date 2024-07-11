@@ -19,3 +19,9 @@
 
 2024/07/11 10:51:50 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/supplier_repo.go:31
 [4.853ms] [rows:0] SELECT * FROM `supplier` WHERE `supplier`.`id` = 1 LIMIT 1
+
+2024/07/11 11:18:33 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/supplier_repo.go:51
+[5.680ms] [rows:2] SELECT * FROM `supplier` WHERE `supplier`.`id` IN (1,2,3)
+
+2024/07/11 11:18:47 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/supplier_repo.go:31
+[4.543ms] [rows:0] SELECT * FROM `supplier` WHERE `supplier`.`id` = 1 LIMIT 1

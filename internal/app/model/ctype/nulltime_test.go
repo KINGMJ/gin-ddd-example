@@ -17,35 +17,6 @@ func TestNewNullTime(t *testing.T) {
 	assert.Equal(t, now, timeNow.Time)
 }
 
-func TestNullTimeValue(t *testing.T) {
-	now := time.Now()
-	nullTime := ctype.NewNullTime(now)
-
-	value, err := nullTime.Value()
-	assert.NoError(t, err)
-	assert.Equal(t, now.Format(constants.TIME_FORMAT), value)
-
-	nullTime.Valid = false
-	value, err = nullTime.Value()
-	assert.NoError(t, err)
-	assert.Nil(t, value)
-}
-
-func TestNullTimeScan(t *testing.T) {
-	now := time.Now()
-	var nullTime ctype.NullTime
-
-	err := nullTime.Scan(now)
-	assert.NoError(t, err)
-	assert.True(t, nullTime.Valid)
-	assert.Equal(t, now, nullTime.Time)
-
-	err = nullTime.Scan(nil)
-	assert.NoError(t, err)
-	assert.False(t, nullTime.Valid)
-	assert.Equal(t, time.Time{}, nullTime.Time)
-}
-
 func TestNullTimeMarshalJSON(t *testing.T) {
 	now := time.Now()
 	nullTime := ctype.NewNullTime(now)

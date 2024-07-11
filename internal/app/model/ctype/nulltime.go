@@ -3,7 +3,6 @@ package ctype
 // 自定义的类型
 import (
 	"database/sql"
-	"database/sql/driver"
 	"encoding/json"
 	"gin-ddd-example/internal/app/constants"
 	"time"
@@ -15,22 +14,6 @@ type NullTime struct {
 
 func NewNullTime(t time.Time) NullTime {
 	return NullTime{NullTime: sql.NullTime{Time: t, Valid: true}}
-}
-
-func (n NullTime) Value() (driver.Value, error) {
-	if !n.Valid {
-		return nil, nil
-	}
-	return n.Time.Format(constants.TIME_FORMAT), nil
-}
-
-func (n *NullTime) Scan(value any) error {
-	if value == nil {
-		n.Time, n.Valid = time.Time{}, false
-	} else {
-		n.Time, n.Valid = value.(time.Time), true
-	}
-	return nil
 }
 
 func (n NullTime) MarshalJSON() ([]byte, error) {
