@@ -4,24 +4,26 @@ import (
 	"fmt"
 	"gin-ddd-example/pkg/config"
 	"log"
+	"net/url"
 	"time"
 
-	"gorm.io/driver/postgres"
+	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 )
 
 // 初始化db链接
-func InitPostgresql() *Database {
-	c := config.Conf.PostgresqlConf
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s TimeZone=%s",
-		c.Host,
+func InitMysql() *Database {
+	c := config.Conf.MysqlConf
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=%s",
 		c.User,
 		c.Password,
-		c.Dbname,
+		c.Host,
 		c.Port,
-		c.TimeZone,
+		c.Dbname,
+		url.QueryEscape(c.TimeZone), // Asia/Shanghai，斜杠为特殊符号，需要转为%2F，否则报错：invalid DSN: did you forget to escape a param value?
 	)
+
 	newLogger := logger.New(
 		log.New(getLogWriter(config.Conf), "\r\n", log.LstdFlags), // io writer
 		logger.Config{
@@ -32,7 +34,7 @@ func InitPostgresql() *Database {
 			Colorful:                  false,                  // Disable color
 		},
 	)
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
 		Logger: newLogger,
 	})
 	if err != nil {
