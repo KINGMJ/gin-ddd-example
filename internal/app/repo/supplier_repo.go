@@ -28,18 +28,18 @@ func (repo *SupplierRepoImpl) FindById(id int) (*model.Supplier, error) {
 	// 必须定义为值类型，引用类型获取的为空
 	var supplier model.Supplier
 	// repo.DB.First(&supplier, id)
-	// res := repo.DB.Take(&supplier, id)
+	res := repo.DB.Take(&supplier, id)
 
 	// 根据指定字段查询，获取主键升序的第一条记录
-	res := repo.DB.First(&supplier, "merchant_id = ?", 15)
+	// res := repo.DB.First(&supplier, "merchant_id = ?", 15)
 
 	fmt.Println("找到的记录数：", res.RowsAffected)
 	fmt.Println("错误信息：", res.Error)
 
 	// 判断查询的记录是否存在
-	if errors.Is(res.Error, gorm.ErrRecordNotFound) {
-		return nil, nil
-	}
+	// if errors.Is(res.Error, gorm.ErrRecordNotFound) {
+	// 	return nil, nil
+	// }
 	return &supplier, nil
 }
 

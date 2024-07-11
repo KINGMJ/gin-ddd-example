@@ -34,6 +34,7 @@ func (table *Supplier) TableName() string {
 
 // ----------- (●'◡'●)(●'◡'●)(●'◡'●)(●'◡'●)(●'◡'●)(●'◡'●)(●'◡'●)(●'◡'●)(●'◡'●)(●'◡'●) ------------
 // 定义的自定义类型
+
 type SupplierScale int
 
 const (

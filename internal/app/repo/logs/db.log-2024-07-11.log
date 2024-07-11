@@ -1,0 +1,21 @@
+
+2024/07/11 10:07:29 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/supplier_repo.go:34
+[3.717ms] [rows:1] SELECT * FROM `supplier` WHERE merchant_id = 15 ORDER BY `supplier`.`id` LIMIT 1
+
+2024/07/11 10:08:03 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/supplier_repo.go:31
+[4.929ms] [rows:0] SELECT * FROM `supplier` WHERE `supplier`.`id` = 1 LIMIT 1
+
+2024/07/11 10:08:37 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/supplier_repo.go:31
+[7.002ms] [rows:0] SELECT * FROM `supplier` WHERE `supplier`.`id` = 1 LIMIT 1
+
+2024/07/11 10:45:36 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/supplier_repo.go:51
+[5.007ms] [rows:2] SELECT * FROM `supplier` WHERE `supplier`.`id` IN (1,2,3)
+
+2024/07/11 10:45:39 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/supplier_repo.go:31
+[2.898ms] [rows:0] SELECT * FROM `supplier` WHERE `supplier`.`id` = 1 LIMIT 1
+
+2024/07/11 10:46:10 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/supplier_repo.go:31
+[3.752ms] [rows:0] SELECT * FROM `supplier` WHERE `supplier`.`id` = 1 LIMIT 1
+
+2024/07/11 10:51:50 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/supplier_repo.go:31
+[4.853ms] [rows:0] SELECT * FROM `supplier` WHERE `supplier`.`id` = 1 LIMIT 1

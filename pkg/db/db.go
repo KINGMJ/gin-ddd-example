@@ -2,7 +2,7 @@ package db
 
 import (
 	"fmt"
-	"gin-ddd-example/internal/app/constant"
+	"gin-ddd-example/internal/app/constants"
 	"gin-ddd-example/pkg/config"
 	"time"
 
@@ -20,7 +20,7 @@ type Database struct {
 // 初始化db链接，根据配置文件选择连接的数据源
 func InitDb() *Database {
 	c := config.Conf
-	if c.AppConf.Database == constant.DB_MYSQL {
+	if c.AppConf.Database == constants.DB_MYSQL {
 		return InitMysql()
 	}
 	return InitPostgresql()
