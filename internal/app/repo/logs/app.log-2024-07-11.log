@@ -20,3 +20,10 @@
 [2024-07-11 12:01:36.657]	[dev.info]	repo/supplier_repo_test.go:19	log init success!
 [2024-07-11 12:34:19.875]	[dev.info]	repo/supplier_repo_test.go:19	log init success!
 [2024-07-11 12:34:27.532]	[dev.info]	repo/supplier_repo_test.go:19	log init success!
+[2024-07-11 13:03:52.610]	[dev.info]	repo/supplier_repo_test.go:22	log init success!
+[2024-07-11 13:04:47.418]	[dev.info]	repo/supplier_repo_test.go:24	log init success!
+[2024-07-11 13:23:46.394]	[dev.info]	repo/supplier_repo_test.go:24	log init success!
+[2024-07-11 13:24:09.812]	[dev.info]	repo/supplier_repo_test.go:24	log init success!
+[2024-07-11 13:25:00.538]	[dev.info]	repo/supplier_repo_test.go:24	log init success!
+[2024-07-11 13:25:53.049]	[dev.info]	repo/supplier_repo_test.go:24	log init success!
+[2024-07-11 13:27:51.873]	[dev.info]	repo/supplier_repo_test.go:24	log init success!

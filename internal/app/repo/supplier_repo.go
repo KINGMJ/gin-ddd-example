@@ -12,6 +12,7 @@ import (
 // 定义仓储接口
 type SupplierRepo interface {
 	FindById(id int) (*model.Supplier, error)
+	Create(supplier *model.Supplier) (*model.Supplier, error)
 }
 
 type SupplierRepoImpl struct {
@@ -56,8 +57,8 @@ func (repo *SupplierRepoImpl) FindByIds(ids []int) ([]*model.Supplier, error) {
 	return suppliers, nil
 }
 
-func (repo *SupplierRepoImpl) FindByWhere() ([]*model.Supplier, error) {
-	var suppliers []*model.Supplier
+func (repo *SupplierRepoImpl) FindByWhere() (model.Suppliers, error) {
+	var suppliers model.Suppliers
 	// 字符串条件，根据代码指定的顺序去查询
 	// res := repo.DB.Where("name LIKE ?", "%有限公司%").
 	// 	Where("merchant_id = ?", 15).
@@ -104,4 +105,20 @@ func (repo *SupplierRepoImpl) FindByWhere() ([]*model.Supplier, error) {
 		return nil, nil
 	}
 	return suppliers, nil
+}
+
+func (repo *SupplierRepoImpl) Create(supplier *model.Supplier) (*model.Supplier, error) {
+	res := repo.DB.Create(supplier)
+	fmt.Println("影响的行数", res.RowsAffected)
+	fmt.Println("错误信息：", res.Error)
+	return supplier, res.Error
+}
+
+func (repo *SupplierRepoImpl) BatchCreate(suppliers model.Suppliers) (model.Suppliers, error) {
+	// res := repo.DB.Create(suppliers)
+	// 分批次执行
+	res := repo.DB.CreateInBatches(suppliers, 3)
+	fmt.Println("影响的行数", res.RowsAffected)
+	fmt.Println("错误信息：", res.Error)
+	return suppliers, res.Error
 }

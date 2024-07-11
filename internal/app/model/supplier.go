@@ -17,7 +17,7 @@ type Supplier struct {
 	AdvanceType     string         `json:"advanceType"`          // 进货方式
 	OrderDate       ctype.NullTime `json:"orderDate"`            // 订货日
 	Cycle           int64          `json:"cycle"`                // 到货周期
-	PayWhere        int64          `json:"payWhere"`             // 付款条件 1:货到付款2:订单付款
+	PayWhere        int64          `json:"payWhere"`             // 付款条件 1:货到付款 2:订单付款
 	BankName        string         `json:"bankName"`             // 银行名称
 	OpenBank        string         `json:"openBank"`             // 开户支行
 	BankAccount     string         `json:"bankAccount"`          // 银行账户/对公账户
@@ -51,4 +51,9 @@ const (
 	_                        SupplierMode = iota
 	SupplierModePurchaseSale              // 购销
 	SupplierModeJoint                     // 联营
+)
+
+// 其他自定义的类型
+type (
+	Suppliers []*Supplier
 )
