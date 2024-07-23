@@ -1,0 +1,18 @@
+
+2024/07/23 12:50:55 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/blog_repo_test.go:9
+[17.163ms] [rows:-] SELECT DATABASE()
+
+2024/07/23 12:50:55 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/blog_repo_test.go:9
+[35.213ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'retail%' ORDER BY SCHEMA_NAME='retail' DESC,SCHEMA_NAME limit 1
+
+2024/07/23 12:50:55 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/blog_repo_test.go:9
+[22.633ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'retail' AND table_name = 'blog' AND table_type = 'BASE TABLE'
+
+2024/07/23 12:50:55 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/blog_repo_test.go:9
+[52.793ms] [rows:0] CREATE TABLE `blog` (`id` bigint unsigned AUTO_INCREMENT,`created_at` datetime(3) NULL,`updated_at` datetime(3) NULL,`deleted_at` datetime(3) NULL,`author_name` longtext,`author_email` longtext,`upvotes` bigint,PRIMARY KEY (`id`),INDEX `idx_blog_deleted_at` (`deleted_at`))
+
+2024/07/23 13:01:09 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/blog_repo.go:22
+[6.958ms] [rows:0] SELECT * FROM `blog` WHERE `blog`.`id` = 1 AND `blog`.`deleted_at` IS NULL ORDER BY `blog`.`id` LIMIT 1
+
+2024/07/23 13:48:26 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/blog_repo.go:22
+[5.968ms] [rows:0] SELECT * FROM `blog` WHERE `blog`.`id` = 7 AND `blog`.`deleted_at` IS NULL ORDER BY `blog`.`id` LIMIT 1

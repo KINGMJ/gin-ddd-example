@@ -122,3 +122,7 @@ func (repo *SupplierRepoImpl) BatchCreate(suppliers model.Suppliers) (model.Supp
 	fmt.Println("错误信息：", res.Error)
 	return suppliers, res.Error
 }
+
+// func (repo *SupplierRepoImpl) Save(supplier *model.Supplier) (*model.Supplier, error) {
+
+// }

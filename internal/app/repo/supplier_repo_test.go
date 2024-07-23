@@ -3,27 +3,12 @@ package repo_test
 import (
 	"fmt"
 	"gin-ddd-example/internal/app/model"
-	"gin-ddd-example/internal/app/model/ctype"
 	"gin-ddd-example/internal/app/repo"
-	"gin-ddd-example/pkg/config"
-	"gin-ddd-example/pkg/db"
-	"gin-ddd-example/pkg/logs"
 	"gin-ddd-example/pkg/utils"
 	"testing"
-	"time"
 
 	"github.com/brianvoe/gofakeit/v6"
 )
-
-var database *db.Database
-
-func init() {
-	config.InitConfig()
-	// 日志初始化
-	logs.InitLog(*config.Conf)
-	logs.Log.Info("log init success!")
-	database = db.InitDb()
-}
 
 func TestFindById(t *testing.T) {
 	supplierRepo := &repo.SupplierRepoImpl{database}
@@ -53,7 +38,7 @@ func TestFindByWhere(t *testing.T) {
 	utils.PrettyJson(suppliers)
 }
 
-func TestSave(t *testing.T) {
+func TestCreate(t *testing.T) {
 	supplierRepo := &repo.SupplierRepoImpl{database}
 	res, err := supplierRepo.Create(&model.Supplier{
 		Name:      gofakeit.Company(),
@@ -64,17 +49,18 @@ func TestSave(t *testing.T) {
 		BName:     gofakeit.Username(),
 		BMobile:   gofakeit.Phone(),
 		TaxesCard: gofakeit.CreditCard().Number,
-		Created:   ctype.NewNullTime(time.Now()),
-		Updated:   ctype.NewNullTime(time.Now()),
+		// Created:   ctype.NewNullTime(time.Now()),
+		// Updated:   ctype.NewNullTime(time.Now()),
 	})
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
+	fmt.Println(res)
 	utils.PrettyJson(res)
 }
 
-func TestBatchSave(t *testing.T) {
+func TestBatchCreate(t *testing.T) {
 	supplierRepo := &repo.SupplierRepoImpl{database}
 
 	// 批量插入10条
@@ -90,8 +76,8 @@ func TestBatchSave(t *testing.T) {
 			BName:     gofakeit.Username(),
 			BMobile:   gofakeit.Phone(),
 			TaxesCard: gofakeit.CreditCard().Number,
-			Created:   ctype.NewNullTime(time.Now()),
-			Updated:   ctype.NewNullTime(time.Now()),
+			// Created:   ctype.NewNullTime(time.Now()),
+			// Updated:   ctype.NewNullTime(time.Now()),
 		})
 	}
 
