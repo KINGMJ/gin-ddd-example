@@ -1,0 +1,12 @@
+
+2024/08/07 09:34:46 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/recommend_supplier_test.go:36
+[41.849ms] [rows:1] UPDATE `recommend_supplier` SET `logo`=CAST('{"name":"哈哈11","url":"https://www.baiud.com"}' AS JSON),`updated_at`='2024-08-07 09:34:46.54' WHERE id = 1
+
+2024/08/07 09:35:23 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/recommend_supplier_test.go:36 Error 1146 (42S02): Table 'retail.recommend_suppliers' doesn't exist
+[24.316ms] [rows:0] UPDATE `recommend_suppliers` SET `logo`=CAST('{"name":"哈哈11","url":"https://www.baiud.com"}' AS JSON),`updated_at`='2024-08-07 09:35:23.618' WHERE id = 1
+
+2024/08/07 09:35:44 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/recommend_supplier_test.go:45
+[2.515ms] [rows:1] SELECT * FROM `recommend_supplier_type` WHERE `recommend_supplier_type`.`id` = 1
+
+2024/08/07 09:35:44 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/recommend_supplier_test.go:45
+[7.784ms] [rows:1] SELECT * FROM `recommend_supplier` WHERE `recommend_supplier`.`id` = 1

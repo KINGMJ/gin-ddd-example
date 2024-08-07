@@ -89,7 +89,44 @@ func TestBatchCreate(t *testing.T) {
 	utils.PrettyJson(res)
 }
 
-// 更新，如果是部分更新，
-// bank name 如何区分0值
-// name= "bbb"  bName="" ,
-// update  zhuan entity
+func TestSave(t *testing.T) {
+	supplierRepo := &repo.SupplierRepoImpl{database}
+	supplier, err := supplierRepo.FindById(1)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	supplier.Name = "bbb"
+	supplier.BName = ""
+	res, err := supplierRepo.Save(supplier)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	utils.PrettyJson(res)
+}
+
+func TestUpdate(t *testing.T) {
+	// 根据条件更新
+	// tx := database.Model(&model.Supplier{}).Where("name = ?", "bbb").Update("name", "ccc")
+	// 根据主键更新
+	supplierRepo := &repo.SupplierRepoImpl{database}
+	supplier, err := supplierRepo.FindById(2)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	tx := database.Model(supplier).Update("name", "hello")
+	fmt.Println(tx.Error)
+}
+
+func TestUpdates(t *testing.T) {
+	// 使用structs 更新
+	// tx := database.Model(&model.Supplier{}).Where("s_type = ?", 1).Limit(1).
+	// 	Updates(model.Supplier{Name: "jack", BName: "rose", Scale: 0})
+
+	// 使用 map 更新
+	tx := database.Model(&model.Supplier{}).Where("id = ?", 63).
+		Updates(map[string]any{"name": "jack", "b_name": "rose", "scale": 0})
+	fmt.Println(tx.Error)
+}

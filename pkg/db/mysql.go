@@ -35,7 +35,8 @@ func InitMysql() *Database {
 		},
 	)
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
-		Logger: newLogger,
+		Logger:                                   newLogger,
+		DisableForeignKeyConstraintWhenMigrating: true, // 禁止建立外键
 	})
 	if err != nil {
 		log.Fatal(err)

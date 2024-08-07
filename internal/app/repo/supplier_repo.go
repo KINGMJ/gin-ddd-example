@@ -123,6 +123,9 @@ func (repo *SupplierRepoImpl) BatchCreate(suppliers model.Suppliers) (model.Supp
 	return suppliers, res.Error
 }
 
-// func (repo *SupplierRepoImpl) Save(supplier *model.Supplier) (*model.Supplier, error) {
-
-// }
+func (repo *SupplierRepoImpl) Save(supplier *model.Supplier) (*model.Supplier, error) {
+	res := repo.DB.Save(supplier)
+	fmt.Println("影响的行数", res.RowsAffected)
+	fmt.Println("错误信息：", res.Error)
+	return supplier, res.Error
+}
