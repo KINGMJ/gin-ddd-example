@@ -9,7 +9,8 @@ import (
 // 持久化模型，包含db模型，关联关系
 type RecommendSupplierPo struct {
 	RecommendSupplier
-	Type RecommendSupplierTypePo `json:"type" gorm:"foreignKey:TypeID;references:ID"` // 推荐供应商类型
+	Type     RecommendSupplierTypePo      `json:"type" gorm:"foreignKey:TypeID;references:ID"` // 推荐供应商类型
+	Products []RecommendSupplierProductPo `json:"products" gorm:"foreignKey:SupplierID;references:ID"`
 }
 
 // db 模型

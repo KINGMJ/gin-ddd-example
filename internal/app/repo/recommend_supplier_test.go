@@ -8,7 +8,9 @@ import (
 	"log"
 	"testing"
 
+	"github.com/brianvoe/gofakeit/v6"
 	"gorm.io/datatypes"
+	"gorm.io/gorm"
 )
 
 func TestRecommendFindById(t *testing.T) {
@@ -51,7 +53,7 @@ func TestRecommendPreloadFindById(t *testing.T) {
 
 func TestRecommendCreate(t *testing.T) {
 	supplier := model.RecommendSupplier{
-		Name:         "供应商444",
+		Name:         gofakeit.Company(),
 		Contact:      datatypes.JSON([]byte(`{"name":"张三","phone":"123456789"}`)),
 		Logo:         datatypes.JSON([]byte(`{"url":"https://www.baiud.com","name":"哈哈"}`)),
 		SpecialIntro: datatypes.JSON([]byte(`{"name":"哈哈","phone":"123456789"}`)),
@@ -59,7 +61,7 @@ func TestRecommendCreate(t *testing.T) {
 	}
 
 	supplierType := model.RecommendSupplierType{
-		Name:   "糖果",
+		Name:   gofakeit.ProductCategory(),
 		Status: 1,
 	}
 
@@ -96,4 +98,26 @@ func TestRecommendSupplierBannerFindByID(t *testing.T) {
 	fmt.Println("找到的记录数：", res.RowsAffected)
 	fmt.Println("错误信息：", res.Error)
 	utils.PrettyJson(banner)
+}
+
+// 多个 preload
+func TestRecommendHasManyProducts(t *testing.T) {
+	var rs model.RecommendSupplierPo
+	res := database.Preload("Products", func(db *gorm.DB) *gorm.DB {
+		return db.Where(&model.RecommendSupplierProduct{TypeID: 1})
+	}).Preload("Type").First(&rs, 1)
+	fmt.Println("错误信息：", res.Error)
+	utils.PrettyJson(rs)
+}
+
+// 列表里面preload是如何加载的
+// Raw Sql:
+// SELECT * FROM `recommend_supplier_product` WHERE `recommend_supplier_product`.`type_id` = 1 AND `recommend_supplier_product`.`supplier_id` IN (1,2,3)
+func TestRecommendHasManyProducts2(t *testing.T) {
+	var suppliers []*model.RecommendSupplierPo
+	res := database.Preload("Products", func(db *gorm.DB) *gorm.DB {
+		return db.Where(&model.RecommendSupplierProduct{TypeID: 1})
+	}).Limit(10).Find(&suppliers)
+	fmt.Println("错误信息：", res.Error)
+	utils.PrettyJson(suppliers)
 }

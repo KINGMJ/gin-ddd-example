@@ -1,0 +1,30 @@
+
+2024/08/08 09:14:50 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/recommend_supplier_test.go:117
+[3.297ms] [rows:5] SELECT * FROM `recommend_supplier_product` WHERE `recommend_supplier_product`.`type_id` = 1 AND `recommend_supplier_product`.`supplier_id` = 1
+
+2024/08/08 09:14:50 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/recommend_supplier_test.go:117
+[8.867ms] [rows:1] SELECT * FROM `recommend_supplier` LIMIT 10
+
+2024/08/08 09:19:49 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/recommend_supplier_test.go:72
+[19.906ms] [rows:1] INSERT INTO `recommend_supplier_type` (`name`,`status`) VALUES ('home appliances',1) ON DUPLICATE KEY UPDATE `id`=`id`
+
+2024/08/08 09:19:49 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/recommend_supplier_test.go:72 Error 1054 (42S22): Unknown column 'contact' in 'field list'
+[31.426ms] [rows:0] INSERT INTO `recommend_supplier` (`name`,`code`,`type_id`,`province_id`,`city_id`,`district_id`,`logo`,`credit_code`,`create_date`,`legal_representative`,`registered_capital`,`website`,`intro`,`contact`,`qualification`,`sort`,`special_intro`,`special_mark`,`creator`,`status`,`created_at`,`updated_at`) VALUES ('IBM','',2,0,0,0,CAST('{"url":"https://www.baiud.com","name":"哈哈"}' AS JSON),'','','',0,'','',CAST('{"name":"张三","phone":"123456789"}' AS JSON),'',0,CAST('{"name":"哈哈","phone":"123456789"}' AS JSON),CAST('{"name":"哈哈","phone":"123456789"}' AS JSON),0,1,'2024-08-08 09:19:49.102','2024-08-08 09:19:49.102')
+
+2024/08/08 09:21:32 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/recommend_supplier_test.go:72
+[6.658ms] [rows:1] INSERT INTO `recommend_supplier_type` (`name`,`status`) VALUES ('mobile phones',1) ON DUPLICATE KEY UPDATE `id`=`id`
+
+2024/08/08 09:21:32 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/recommend_supplier_test.go:72
+[14.605ms] [rows:1] INSERT INTO `recommend_supplier` (`name`,`code`,`type_id`,`province_id`,`city_id`,`district_id`,`logo`,`credit_code`,`create_date`,`legal_representative`,`registered_capital`,`website`,`intro`,`contact`,`qualification`,`sort`,`special_intro`,`special_mark`,`creator`,`status`,`created_at`,`updated_at`) VALUES ('Verdafero','',3,0,0,0,CAST('{"url":"https://www.baiud.com","name":"哈哈"}' AS JSON),'','','',0,'','',CAST('{"name":"张三","phone":"123456789"}' AS JSON),'',0,CAST('{"name":"哈哈","phone":"123456789"}' AS JSON),CAST('{"name":"哈哈","phone":"123456789"}' AS JSON),0,1,'2024-08-08 09:21:32.295','2024-08-08 09:21:32.295')
+
+2024/08/08 09:22:04 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/recommend_supplier_test.go:72
+[5.495ms] [rows:1] INSERT INTO `recommend_supplier_type` (`name`,`status`) VALUES ('headphones and earbuds',1) ON DUPLICATE KEY UPDATE `id`=`id`
+
+2024/08/08 09:22:04 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/recommend_supplier_test.go:72
+[16.880ms] [rows:1] INSERT INTO `recommend_supplier` (`name`,`code`,`type_id`,`province_id`,`city_id`,`district_id`,`logo`,`credit_code`,`create_date`,`legal_representative`,`registered_capital`,`website`,`intro`,`contact`,`qualification`,`sort`,`special_intro`,`special_mark`,`creator`,`status`,`created_at`,`updated_at`) VALUES ('Alltuition','',4,0,0,0,CAST('{"url":"https://www.baiud.com","name":"哈哈"}' AS JSON),'','','',0,'','',CAST('{"name":"张三","phone":"123456789"}' AS JSON),'',0,CAST('{"name":"哈哈","phone":"123456789"}' AS JSON),CAST('{"name":"哈哈","phone":"123456789"}' AS JSON),0,1,'2024-08-08 09:22:04.179','2024-08-08 09:22:04.179')
+
+2024/08/08 09:22:12 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/recommend_supplier_test.go:118
+[3.178ms] [rows:5] SELECT * FROM `recommend_supplier_product` WHERE `recommend_supplier_product`.`type_id` = 1 AND `recommend_supplier_product`.`supplier_id` IN (1,2,3)
+
+2024/08/08 09:22:12 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/recommend_supplier_test.go:118
+[7.490ms] [rows:3] SELECT * FROM `recommend_supplier` LIMIT 10
