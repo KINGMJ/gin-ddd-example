@@ -28,3 +28,12 @@
 
 2024/08/08 09:22:12 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/recommend_supplier_test.go:118
 [7.490ms] [rows:3] SELECT * FROM `recommend_supplier` LIMIT 10
+
+2024/08/08 09:53:05 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/supplier_repo.go:32 Error 1146 (42S02): Table 'retail.suppliers' doesn't exist
+[15.199ms] [rows:0] SELECT * FROM `suppliers` WHERE `suppliers`.`id` = 1 LIMIT 1
+
+2024/08/08 09:57:50 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/supplier_repo.go:32
+[7.154ms] [rows:0] SELECT * FROM `supplier` WHERE `supplier`.`id` = 1 LIMIT 1
+
+2024/08/08 09:58:09 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/supplier_repo.go:32
+[4.630ms] [rows:1] SELECT * FROM `supplier` WHERE `supplier`.`id` = 6 LIMIT 1

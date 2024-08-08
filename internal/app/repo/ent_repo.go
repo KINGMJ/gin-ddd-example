@@ -24,7 +24,6 @@ func NewEntRepo(db *db.Database) *EntRepoImpl {
 // ----------- (●'◡'●)(●'◡'●)(●'◡'●)(●'◡'●)(●'◡'●)(●'◡'●)(●'◡'●)(●'◡'●)(●'◡'●)(●'◡'●) ------------
 
 // 持久化操作
-
 func (repo *EntRepoImpl) List(page, pageSize int) ([]model.Ent, error) {
 	return []model.Ent{}, nil
 }

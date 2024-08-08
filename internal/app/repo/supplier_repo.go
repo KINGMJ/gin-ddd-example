@@ -11,8 +11,8 @@ import (
 
 // 定义仓储接口
 type SupplierRepo interface {
-	FindById(id int) (*model.Supplier, error)
-	Create(supplier *model.Supplier) (*model.Supplier, error)
+	FindById(id int) (*model.SupplierPo, error)
+	Create(supplier *model.SupplierPo) (*model.SupplierPo, error)
 }
 
 type SupplierRepoImpl struct {
@@ -25,9 +25,9 @@ func NewSupplierRepo(db *db.Database) *SupplierRepoImpl {
 
 // ----------- (●'◡'●)(●'◡'●)(●'◡'●)(●'◡'●)(●'◡'●)(●'◡'●)(●'◡'●)(●'◡'●)(●'◡'●)(●'◡'●) ------------
 
-func (repo *SupplierRepoImpl) FindById(id int) (*model.Supplier, error) {
+func (repo *SupplierRepoImpl) FindById(id int) (*model.SupplierPo, error) {
 	// 必须定义为值类型，引用类型获取的为空
-	var supplier model.Supplier
+	var supplier model.SupplierPo
 	// repo.DB.First(&supplier, id)
 	res := repo.DB.Take(&supplier, id)
 

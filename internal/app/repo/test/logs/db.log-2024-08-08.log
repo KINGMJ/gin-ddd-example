@@ -1,0 +1,99 @@
+
+2024/08/08 11:12:44 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/test/supplier_repo_test.go:149
+[1.874ms] [rows:2] SELECT * FROM `supplier_store` WHERE `supplier_store`.`supplier_id` = 2
+
+2024/08/08 11:12:44 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/test/supplier_repo_test.go:149
+[6.547ms] [rows:1] SELECT * FROM `supplier` WHERE `supplier`.`id` = 2 ORDER BY `supplier`.`id` LIMIT 1
+
+2024/08/08 11:14:52 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/test/supplier_repo_test.go:149
+[2.297ms] [rows:2] SELECT * FROM `supplier_store` WHERE `supplier_store`.`supplier_id` = 2
+
+2024/08/08 11:14:52 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/test/supplier_repo_test.go:149
+[3.022ms] [rows:2] SELECT * FROM `store` WHERE `store`.`id` IN (30,31)
+
+2024/08/08 11:14:52 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/test/supplier_repo_test.go:149
+[10.625ms] [rows:1] SELECT * FROM `supplier` WHERE `supplier`.`id` = 2 ORDER BY `supplier`.`id` LIMIT 1
+
+2024/08/08 11:26:36 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/test/supplier_repo_test.go:149
+[2.042ms] [rows:2] SELECT * FROM `supplier_store` WHERE `supplier_store`.`supplier_id` = 2
+
+2024/08/08 11:26:36 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/test/supplier_repo_test.go:149
+[1.694ms] [rows:2] SELECT * FROM `store` WHERE `store`.`id` IN (30,31)
+
+2024/08/08 11:26:36 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/test/supplier_repo_test.go:149
+[8.715ms] [rows:1] SELECT * FROM `supplier` WHERE `supplier`.`id` = 2 ORDER BY `supplier`.`id` LIMIT 1
+
+2024/08/08 11:33:41 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/test/supplier_repo_test.go:152
+[4.709ms] [rows:2] SELECT * FROM `supplier_store` WHERE `supplier_store`.`supplier_id` = 2
+
+2024/08/08 11:33:41 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/test/supplier_repo_test.go:152 Error 1051 (42S02): Unknown table 'stores'
+[4.493ms] [rows:0] SELECT stores.*, supplier_store.joint_rate FROM `store` WHERE `store`.`id` IN (30,31)
+
+2024/08/08 11:33:41 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/test/supplier_repo_test.go:152 Error 1051 (42S02): Unknown table 'stores'
+[26.286ms] [rows:1] SELECT * FROM `supplier` WHERE `supplier`.`id` = 2 ORDER BY `supplier`.`id` LIMIT 1
+
+2024/08/08 11:33:53 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/test/supplier_repo_test.go:152
+[1.561ms] [rows:2] SELECT * FROM `supplier_store` WHERE `supplier_store`.`supplier_id` = 2
+
+2024/08/08 11:33:53 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/test/supplier_repo_test.go:152 Error 1054 (42S22): Unknown column 'supplier_store.joint_rate' in 'field list'
+[1.267ms] [rows:0] SELECT store.*, supplier_store.joint_rate FROM `store` WHERE `store`.`id` IN (30,31)
+
+2024/08/08 11:33:53 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/test/supplier_repo_test.go:152 Error 1054 (42S22): Unknown column 'supplier_store.joint_rate' in 'field list'
+[7.656ms] [rows:1] SELECT * FROM `supplier` WHERE `supplier`.`id` = 2 ORDER BY `supplier`.`id` LIMIT 1
+
+2024/08/08 11:36:45 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/test/supplier_repo_test.go:152
+[3.074ms] [rows:2] SELECT * FROM `supplier_store` WHERE `supplier_store`.`supplier_id` = 2
+
+2024/08/08 11:36:45 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/test/supplier_repo_test.go:152
+[8.461ms] [rows:48] SELECT store.*, supplier_store.joint_rate FROM `store` JOIN supplier_store ON supplier_store.store_id= store.id WHERE `store`.`id` IN (30,31)
+
+2024/08/08 11:36:45 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/test/supplier_repo_test.go:152
+[14.884ms] [rows:1] SELECT * FROM `supplier` WHERE `supplier`.`id` = 2 ORDER BY `supplier`.`id` LIMIT 1
+
+2024/08/08 11:37:54 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/test/supplier_repo_test.go:152
+[3.519ms] [rows:2] SELECT * FROM `supplier_store` WHERE `supplier_store`.`supplier_id` = 2
+
+2024/08/08 11:37:54 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/test/supplier_repo_test.go:152
+[7.039ms] [rows:48] SELECT store.*, supplier_store.joint_rate FROM `store` JOIN supplier_store ON supplier_store.store_id= store.id WHERE `store`.`id` IN (30,31)
+
+2024/08/08 11:37:54 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/test/supplier_repo_test.go:152
+[14.374ms] [rows:1] SELECT * FROM `supplier` WHERE `supplier`.`id` = 2 ORDER BY `supplier`.`id` LIMIT 1
+
+2024/08/08 11:42:04 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/test/supplier_repo_test.go:152
+[3.024ms] [rows:2] SELECT * FROM `supplier_store` WHERE `supplier_store`.`supplier_id` = 2
+
+2024/08/08 11:42:04 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/test/supplier_repo_test.go:152 Error 1146 (42S02): Table 'retail.store_with_joint_rates' doesn't exist
+[9.174ms] [rows:0] SELECT store.*, supplier_store.joint_rate FROM `store_with_joint_rates` JOIN supplier_store ON supplier_store.store_id= store.id WHERE `store_with_joint_rates`.`id` IN (30,31)
+
+2024/08/08 11:42:04 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/test/supplier_repo_test.go:152 Error 1146 (42S02): Table 'retail.store_with_joint_rates' doesn't exist
+[18.535ms] [rows:1] SELECT * FROM `supplier` WHERE `supplier`.`id` = 2 ORDER BY `supplier`.`id` LIMIT 1
+
+2024/08/08 11:42:57 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/test/supplier_repo_test.go:152
+[2.412ms] [rows:2] SELECT * FROM `supplier_store` WHERE `supplier_store`.`supplier_id` = 2
+
+2024/08/08 11:42:57 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/test/supplier_repo_test.go:152 Error 1146 (42S02): Table 'retail.store_with_joint_rates' doesn't exist
+[11.375ms] [rows:0] SELECT store.*, supplier_store.joint_rate FROM `store_with_joint_rates` JOIN supplier_store ON supplier_store.store_id= store.id WHERE `store_with_joint_rates`.`id` IN (30,31)
+
+2024/08/08 11:42:57 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/test/supplier_repo_test.go:152 Error 1146 (42S02): Table 'retail.store_with_joint_rates' doesn't exist
+[20.517ms] [rows:1] SELECT * FROM `supplier` WHERE `supplier`.`id` = 2 ORDER BY `supplier`.`id` LIMIT 1
+
+2024/08/08 11:45:05 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/test/supplier_repo_test.go:152 Stores: unsupported relations for schema SupplierPo
+[2.943ms] [rows:1] SELECT * FROM `supplier` WHERE `supplier`.`id` = 2 ORDER BY `supplier`.`id` LIMIT 1
+
+2024/08/08 11:56:37 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/test/supplier_repo_test.go:152
+[9.449ms] [rows:2] SELECT * FROM `supplier_store` WHERE `supplier_store`.`supplier_id` = 2
+
+2024/08/08 11:56:37 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/test/supplier_repo_test.go:152
+[7.136ms] [rows:48] SELECT store.*, supplier_store.joint_rate FROM `store` JOIN supplier_store ON supplier_store.store_id= store.id WHERE `store`.`id` IN (30,31)
+
+2024/08/08 11:56:37 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/test/supplier_repo_test.go:152
+[24.687ms] [rows:1] SELECT * FROM `supplier` WHERE `supplier`.`id` = 2 ORDER BY `supplier`.`id` LIMIT 1
+
+2024/08/08 13:06:12 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/test/supplier_repo_test.go:149
+[5.995ms] [rows:2] SELECT * FROM `supplier_store` WHERE `supplier_store`.`supplier_id` = 2
+
+2024/08/08 13:06:12 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/test/supplier_repo_test.go:149
+[5.087ms] [rows:2] SELECT * FROM `store` WHERE `store`.`id` IN (30,31)
+
+2024/08/08 13:06:12 /Users/jerrymei/MyCode/go/gin-ddd-example/internal/app/repo/test/supplier_repo_test.go:149
+[21.431ms] [rows:1] SELECT * FROM `supplier` WHERE `supplier`.`id` = 2 ORDER BY `supplier`.`id` LIMIT 1

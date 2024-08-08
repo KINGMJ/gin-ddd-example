@@ -4,6 +4,7 @@ go 1.21.0
 
 require (
 	github.com/brianvoe/gofakeit/v6 v6.28.0
+	github.com/c2fo/testify v0.0.0-20150827203832-fba96363964a
 	github.com/go-playground/validator/v10 v10.14.0
 	github.com/natefinch/lumberjack v2.0.0+incompatible
 	github.com/rabbitmq/amqp091-go v1.9.0
