@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"gin-ddd-example/internal/app/model"
 	"gin-ddd-example/pkg/db"
-
 	"gorm.io/gorm"
 )
 

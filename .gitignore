@@ -1,0 +1,6 @@
+.idea
+.vscode
+.DS_Store
+.env
+go.work.sum
+*logs

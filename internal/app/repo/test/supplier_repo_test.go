@@ -118,20 +118,6 @@ func (suite *SupplierRepoTestSuit) TestFindByID() {
 // // 	utils.PrettyJson(res)
 // // }
 
-// func TestUpdate(t *testing.T) {
-// 	// 根据条件更新
-// 	// tx := database.Model(&model.Supplier{}).Where("name = ?", "bbb").Update("name", "ccc")
-// 	// 根据主键更新
-// 	supplierRepo := &repo.SupplierRepoImpl{database}
-// 	supplier, err := supplierRepo.FindById(2)
-// 	if err != nil {
-// 		fmt.Println(err)
-// 		return
-// 	}
-// 	tx := database.Model(supplier).Update("name", "hello")
-// 	fmt.Println(tx.Error)
-// }
-
 // func TestUpdates(t *testing.T) {
 // 	// 使用structs 更新
 // 	// tx := database.Model(&model.Supplier{}).Where("s_type = ?", 1).Limit(1).
@@ -152,3 +138,29 @@ func (suite *SupplierRepoTestSuit) TestPreloadManyToMany() {
 	}
 	utils.PrettyJson(supplier)
 }
+
+func (suite *SupplierRepoTestSuit) TestUpdate() {
+	supplier, err := suite.supplierRepo.FindById(3)
+	if err != nil {
+		suite.T().Error(err)
+	}
+	// 更新指定字段
+	suite.supplierRepo.Select("SType").Model(supplier).Updates(model.Supplier{
+		Name:  "哈哈哈",
+		SType: 0,
+	})
+}
+
+// func TestUpdate(t *testing.T) {
+// 	// 根据条件更新
+// 	// tx := database.Model(&model.Supplier{}).Where("name = ?", "bbb").Update("name", "ccc")
+// 	// 根据主键更新
+// 	supplierRepo := &repo.SupplierRepoImpl{database}
+// 	supplier, err := supplierRepo.FindById(2)
+// 	if err != nil {
+// 		fmt.Println(err)
+// 		return
+// 	}
+// 	tx := database.Model(supplier).Update("name", "hello")
+// 	fmt.Println(tx.Error)
+// }
