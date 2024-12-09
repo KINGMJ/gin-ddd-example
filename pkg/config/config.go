@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/spf13/viper"
@@ -74,19 +75,7 @@ type LogsConf struct {
 }
 
 func InitConfig() {
-	var configPath string
-	configEnv := os.Getenv("GO_ENV")
-	switch configEnv {
-	case "dev":
-		configPath = "../../configs/dev.yml"
-	case "test":
-		configPath = "../../configs/test.yml"
-	case "prod":
-		configPath = "../../configs/prod.yml"
-	default:
-		configPath = "../../../configs/dev.yml"
-		// configPath = "configs/dev.yml"
-	}
+	configPath := getConfigPath()
 	// 指定配置文件路径
 	viper.SetConfigFile(configPath)
 	viper.SetConfigType("yaml")
@@ -103,4 +92,12 @@ func InitConfig() {
 		log.Fatal(fmt.Errorf("unmarshal conf failed, err:%s", err))
 	}
 	log.Println("The application configuration file is loaded successfully!")
+}
+
+func getConfigPath() string {
+	workDir := os.Getenv("GIN_DDD_EXAMPLE")
+	if workDir == "" {
+		return "configs/dev.yaml"
+	}
+	return filepath.Join(workDir, "configs/dev.yaml")
 }

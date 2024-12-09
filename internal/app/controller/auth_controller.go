@@ -17,6 +17,7 @@ func NewAuthController(authService service.AuthService) *AuthController {
 	return &AuthController{authService}
 }
 
+// Signup
 // @Summary      用户注册
 // @Description  用户注册
 // @Tags         auth
