@@ -2,6 +2,7 @@
 
 在 cmd/app 目录下执行 go run .
 
+
 ## wire 依赖注入
 
 在 cmd/app 目录下执行 wire
@@ -25,3 +26,5 @@ example 里面是各种中间件的示例代码
 ```
 go run example/rabbitmq_example/send/send.go 
 ```
+
+

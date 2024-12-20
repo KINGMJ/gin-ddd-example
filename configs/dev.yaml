@@ -14,7 +14,7 @@ mysql:
   host: localhost
   user: root
   password: 123456
-  dbname: retail
+  dbname: example
   port: 3306
   timezone: Asia/Shanghai
 
