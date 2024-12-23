@@ -2,6 +2,7 @@ package test
 
 import (
 	"gin-ddd-example/internal/app/repo"
+	"gin-ddd-example/pkg/test_suite"
 	"gin-ddd-example/pkg/utils"
 	"testing"
 
@@ -9,12 +10,12 @@ import (
 )
 
 type ProductRepoTestSuit struct {
-	RepoTestSuite
+	test_suite.TestSuite
 	productRepo repo.ProductRepo
 }
 
 func (s *ProductRepoTestSuit) SetupTest() {
-	s.RepoTestSuite.SetupTest()
+	s.TestSuite.SetupSuite()
 	s.productRepo = repo.NewProductRepo()
 }
 
@@ -23,7 +24,7 @@ func TestProductRepoTestSuit(t *testing.T) {
 }
 
 func (s *ProductRepoTestSuit) TestFindByID() {
-	product, err := s.productRepo.FindById(s.db1, 123464)
+	product, err := s.productRepo.FindById(s.Db, 123464)
 	if err != nil {
 		s.T().Error(err)
 	}

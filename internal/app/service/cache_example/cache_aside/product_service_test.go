@@ -1,33 +1,21 @@
-package service_test
+package cache_aside_test
 
 import (
-	"context"
 	"fmt"
 	"gin-ddd-example/internal/app/repo"
-	"gin-ddd-example/internal/app/service"
-	"gin-ddd-example/pkg/cache"
-	"gin-ddd-example/pkg/config"
-	"gin-ddd-example/pkg/db"
-	"gin-ddd-example/pkg/logs"
-	"gin-ddd-example/pkg/rabbitmq"
+	"gin-ddd-example/internal/app/service/cache_example/cache_aside"
+	"gin-ddd-example/pkg/test_suite"
 	"gin-ddd-example/pkg/utils"
+	"github.com/stretchr/testify/suite"
 	"sync"
 	"testing"
 	"time"
-
-	"github.com/redis/go-redis/v9"
-	"github.com/stretchr/testify/suite"
-	"gorm.io/gorm"
 )
 
 type ProductServiceTestSuite struct {
-	suite.Suite
-	db                  *gorm.DB
-	rdb                 *redis.Client
-	ctx                 context.Context
-	productRepo         repo.ProductRepo
-	productService      service.ProductService
-	productServiceCache service.ProductServiceCache
+	test_suite.TestSuite
+	productRepo    repo.ProductRepo
+	productService cache_aside.ProductService
 }
 
 func TestProductServiceTestSuite(t *testing.T) {
@@ -35,19 +23,9 @@ func TestProductServiceTestSuite(t *testing.T) {
 }
 
 func (s *ProductServiceTestSuite) SetupSuite() {
-	// 初始化操作
-	config.InitConfig()
-	cache.InitRedis(*config.Conf)
-	rabbitmq.InitRabbitmq(*config.Conf)
-	// 日志初始化
-	logs.InitLog(*config.Conf)
-	database := db.InitDb()
-	s.ctx = context.Background()
-	s.db = database.DB
-	s.rdb = cache.RedisClient
+	s.TestSuite.SetupSuite()
 	s.productRepo = repo.NewProductRepo()
-	s.productService = service.NewProductService(s.ctx, s.db, s.rdb, s.productRepo)
-	s.productServiceCache = service.NewProductServiceCache(s.ctx, s.db, s.rdb, s.productRepo)
+	s.productService = cache_aside.NewProductService(s.Ctx, s.Db, s.Rdb, s.productRepo)
 }
 
 func (s *ProductServiceTestSuite) TestProductService_GetProduct() {
@@ -71,6 +49,7 @@ func (s *ProductServiceTestSuite) TestProductService_UpdateProduct() {
 	utils.PrettyJson(product)
 }
 
+// 测试先删缓存，再更新db
 func (s *ProductServiceTestSuite) TestProductService_UpdateProductConcurrency() {
 	// 预热缓存
 	product, err := s.productService.GetProduct(123464)
@@ -103,9 +82,10 @@ func (s *ProductServiceTestSuite) TestProductService_UpdateProductConcurrency() 
 	wg.Wait()
 }
 
+// 测试先更新db，再删缓存
 func (s *ProductServiceTestSuite) TestProductService_UpdateProductConcurrency2() {
 	// 预热缓存
-	product, err := s.productServiceCache.Get(123464)
+	product, err := s.productService.GetProduct(123464)
 	if err != nil {
 		s.T().Error(err)
 	}
@@ -116,8 +96,8 @@ func (s *ProductServiceTestSuite) TestProductService_UpdateProductConcurrency2()
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		product.Name = "薯片"
-		err := s.productServiceCache.Set(product)
+		product.Name = "百世可乐"
+		err := s.productService.UpdateProduct2(product)
 		s.NoError(err)
 	}()
 
@@ -126,7 +106,40 @@ func (s *ProductServiceTestSuite) TestProductService_UpdateProductConcurrency2()
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
-			p, err := s.productServiceCache.Get(123464)
+			p, err := s.productService.GetProduct(123464)
+			s.NoError(err)
+			fmt.Println(p.Name)
+		}()
+		time.Sleep(100 * time.Millisecond)
+	}
+	wg.Wait()
+}
+
+// 测试延时双删
+func (s *ProductServiceTestSuite) TestProductService_UpdateProductConcurrency3() {
+	// 预热缓存
+	product, err := s.productService.GetProduct(123464)
+	if err != nil {
+		s.T().Error(err)
+	}
+
+	var wg sync.WaitGroup
+
+	// 更新操作
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		product.Name = "芒果"
+		err := s.productService.UpdateProduct3(product)
+		s.NoError(err)
+	}()
+
+	// 并发读操作
+	for i := 0; i < 10; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			p, err := s.productService.GetProduct(123464)
 			s.NoError(err)
 			fmt.Println(p.Name)
 		}()
