@@ -20,6 +20,7 @@ type Config struct {
 	RabbitmqConf   RabbitmqConf `mapstructure:"rabbitmq"`   // rabbitmq 配置
 	LogsConf       LogsConf     `mapstructure:"logs"`       // 日志配置
 	KafkaConf      KafkaConf    `mapstructure:"kafka"`      // kafka 配置
+	DistLock       DistLock     `mapstructure:"distlock"`   // 分布式锁
 }
 
 type AppConf struct {
@@ -72,6 +73,12 @@ type LogsConf struct {
 	MaxAge     int    `mapstructure:"max_age"`     // 旧文件的最大保留天数
 	Compress   bool   `mapstructure:"compress"`    // 是否压缩
 	ShowLine   bool   `mapstructure:"show_line"`   // 是否显示调用行
+}
+
+type DistLock struct {
+	Type       string `mapstructure:"type"`        // 锁类型：redsync/etcd
+	RetryCount int    `mapstructure:"retry_count"` // 重试次数
+	RetryDelay int    `mapstructure:"retry_delay"` // 单位：毫秒
 }
 
 func InitConfig() {

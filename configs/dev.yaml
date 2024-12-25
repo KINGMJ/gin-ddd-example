@@ -46,3 +46,8 @@ logs:
   max_size: 2 # 日志文件最大大小（MB）
   max_age: 28 # 旧文件的最大保留天数
   compress: true # 是否压缩
+
+distlock:
+  type: redsync
+  retry_count: 10
+  retry_delay: 200

@@ -5,6 +5,7 @@ import (
 	"gin-ddd-example/pkg/cache"
 	"gin-ddd-example/pkg/config"
 	"gin-ddd-example/pkg/db"
+	"gin-ddd-example/pkg/distlock"
 	"gin-ddd-example/pkg/logs"
 	"github.com/redis/go-redis/v9"
 	"github.com/stretchr/testify/suite"
@@ -13,9 +14,10 @@ import (
 
 type TestSuite struct {
 	suite.Suite
-	Db  *gorm.DB
-	Rdb *redis.Client
-	Ctx context.Context
+	Db       *gorm.DB
+	Rdb      *redis.Client
+	Ctx      context.Context
+	Distlock distlock.Locker
 }
 
 func (s *TestSuite) SetupSuite() {
@@ -28,4 +30,5 @@ func (s *TestSuite) SetupSuite() {
 	s.Ctx = context.Background()
 	s.Db = database.DB
 	s.Rdb = cache.RedisClient
+	s.Distlock = distlock.NewDistLock(*config.Conf, s.Rdb, nil)
 }

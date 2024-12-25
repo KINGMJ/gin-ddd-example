@@ -1,4 +1,4 @@
-package write_through_example
+package write_through
 
 import (
 	"context"
