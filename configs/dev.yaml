@@ -45,7 +45,7 @@ logs:
   max_backups: 3 # 旧文件的最大个数
   max_size: 2 # 日志文件最大大小（MB）
   max_age: 28 # 旧文件的最大保留天数
-  compress: true # 是否压缩
+  compress: false # 是否压缩
 
 distlock:
   type: redsync

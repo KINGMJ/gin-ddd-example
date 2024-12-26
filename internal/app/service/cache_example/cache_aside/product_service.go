@@ -15,7 +15,6 @@ import (
 )
 
 // 商品服务，用于测试 redis 的缓存
-
 type ProductService interface {
 	GetProduct(id int64) (*product.Product, error)
 	UpdateProduct(product *product.Product) error
